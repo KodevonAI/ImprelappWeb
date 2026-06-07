@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "gsd": {
+      "source": "ctsstc/get-shit-done-skills",
+      "sourceType": "github",
+      "skillPath": ".kilocode/skills/gsd/SKILL.md",
+      "computedHash": "d600a82e62d25a86ce0b5d114183650abf66ad842d112f63852c0dd9d7d90bcf"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/ui-ux-pro-max/SKILL.md",
+      "computedHash": "0a413bf988d06481f69bb81df2070741c3ba12dd9f1be2706d57f259c905992d"
+    },
+    "wordpress-elementor": {
+      "source": "jezweb/claude-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/wordpress/skills/wordpress-elementor/SKILL.md",
+      "computedHash": "735097295b1c593671d0833c3e9fea335274a2bca13ca3a38da32132bc534650"
+    },
+    "wordpress-pro": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "skillPath": "skills/wordpress-pro/SKILL.md",
+      "computedHash": "ef569ff0920fa0948aca9a464118e13b9a9d655f40fd5b61526b7e53a80f451c"
+    }
+  }
+}

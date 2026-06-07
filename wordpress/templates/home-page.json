@@ -1,0 +1,587 @@
+{
+  "version": "0.4",
+  "title": "Imprelapp - Home",
+  "type": "page",
+  "content": [
+    {
+      "id": "imp_hero_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#08428C",
+        "height": "100vh",
+        "content_position": "middle",
+        "stretch_section": "section-stretched",
+        "padding": {
+          "top": "80",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "imp_hero_c",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "content_position": "middle"
+          },
+          "elements": [
+            {
+              "id": "imp_logo_w",
+              "elType": "widget",
+              "widgetType": "image",
+              "settings": {
+                "image": {
+                  "url": "REEMPLAZAR_CON_URL_LOGO",
+                  "alt": "Imprelapp Logo"
+                },
+                "image_size": "medium",
+                "align": "center",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "32",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                },
+                "width": {
+                  "size": 220,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_hero_h",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Rodamientos, Piñones,<br>Correas y Ferretería",
+                "header_size": "h1",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_typography": "custom",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 52,
+                  "unit": "px"
+                },
+                "typography_font_size_tablet": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 28,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "typography_line_height": {
+                  "size": 1.2,
+                  "unit": "em"
+                },
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "20",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_hero_t",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#C8DEFF;font-family:'Inter',sans-serif;font-size:18px;line-height:1.6;\">Distribuidores industriales en Colombia. Calidad garantizada,<br>entregas ágiles a todo el país.</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "36",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_hero_b",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Ver Productos",
+                "link": {
+                  "url": "#productos",
+                  "is_external": false,
+                  "nofollow": false
+                },
+                "align": "center",
+                "background_color": "#FFFFFF",
+                "button_text_color": "#08428C",
+                "border_radius": {
+                  "top": "5",
+                  "right": "5",
+                  "bottom": "5",
+                  "left": "5",
+                  "unit": "px",
+                  "isLinked": true
+                },
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 16,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "padding": {
+                  "top": "16",
+                  "right": "44",
+                  "bottom": "16",
+                  "left": "44",
+                  "unit": "px",
+                  "isLinked": false
+                },
+                "hover_background_color": "#034C8C",
+                "hover_color": "#FFFFFF",
+                "button_hover_border_color": "transparent",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_hero_b2",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Contáctanos por WhatsApp",
+                "link": {
+                  "url": "https://wa.me/57REEMPLAZAR_NUMERO",
+                  "is_external": true,
+                  "nofollow": true
+                },
+                "align": "center",
+                "background_color": "transparent",
+                "button_text_color": "#FFFFFF",
+                "border_border": "solid",
+                "border_color": "#FFFFFF",
+                "border_width": {
+                  "top": "2",
+                  "right": "2",
+                  "bottom": "2",
+                  "left": "2",
+                  "unit": "px",
+                  "isLinked": true
+                },
+                "border_radius": {
+                  "top": "5",
+                  "right": "5",
+                  "bottom": "5",
+                  "left": "5",
+                  "unit": "px",
+                  "isLinked": true
+                },
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "typography_font_weight": "600",
+                "padding": {
+                  "top": "13",
+                  "right": "36",
+                  "bottom": "13",
+                  "left": "36",
+                  "unit": "px",
+                  "isLinked": false
+                },
+                "hover_background_color": "#FFFFFF",
+                "hover_color": "#08428C"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "imp_feat_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#EEF4FF",
+        "padding": {
+          "top": "60",
+          "right": "30",
+          "bottom": "60",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "imp_feat_c1",
+          "elType": "column",
+          "settings": { "_column_size": 33 },
+          "elements": [
+            {
+              "id": "imp_feat_w1",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-medal",
+                  "library": "fa-solid"
+                },
+                "title_text": "Calidad Garantizada",
+                "description_text": "Productos de las mejores marcas industriales del mercado.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#444444",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 40,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "description_typography_font_family": "Inter"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "imp_feat_c2",
+          "elType": "column",
+          "settings": { "_column_size": 33 },
+          "elements": [
+            {
+              "id": "imp_feat_w2",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-truck",
+                  "library": "fa-solid"
+                },
+                "title_text": "Entrega a Todo Colombia",
+                "description_text": "Despachos rápidos y seguros a cualquier ciudad del país.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#444444",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 40,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "description_typography_font_family": "Inter"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "imp_feat_c3",
+          "elType": "column",
+          "settings": { "_column_size": 33 },
+          "elements": [
+            {
+              "id": "imp_feat_w3",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-cogs",
+                  "library": "fa-solid"
+                },
+                "title_text": "Gran Variedad",
+                "description_text": "Rodamientos, piñones, correas, ferretería y más.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#444444",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 40,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "description_typography_font_family": "Inter"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "imp_prod_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "top": "80",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": "productos"
+      },
+      "elements": [
+        {
+          "id": "imp_prod_c",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "imp_prod_h",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Nuestros Productos",
+                "header_size": "h2",
+                "align": "center",
+                "title_color": "#08428C",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 26,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "12",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_prod_div",
+              "elType": "widget",
+              "widgetType": "divider",
+              "settings": {
+                "color": "#08428C",
+                "weight": {
+                  "size": 3,
+                  "unit": "px"
+                },
+                "width": {
+                  "size": 60,
+                  "unit": "px"
+                },
+                "align": "center",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "40",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_prod_sc",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[products columns=\"4\" limit=\"8\" orderby=\"date\" order=\"DESC\"]"
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_prod_btn",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Ver Todos los Productos",
+                "link": {
+                  "url": "/shop",
+                  "is_external": false
+                },
+                "align": "center",
+                "background_color": "#08428C",
+                "button_text_color": "#FFFFFF",
+                "border_radius": {
+                  "top": "5",
+                  "right": "5",
+                  "bottom": "5",
+                  "left": "5",
+                  "unit": "px",
+                  "isLinked": true
+                },
+                "typography_font_family": "Inter",
+                "typography_font_weight": "600",
+                "typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "padding": {
+                  "top": "14",
+                  "right": "36",
+                  "bottom": "14",
+                  "left": "36",
+                  "unit": "px",
+                  "isLinked": false
+                },
+                "hover_background_color": "#034C8C",
+                "_margin": {
+                  "top": "40",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "imp_cta_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#034C8C",
+        "padding": {
+          "top": "70",
+          "right": "30",
+          "bottom": "70",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "imp_cta_c",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "imp_cta_h",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "¿Necesitas asesoría técnica?",
+                "header_size": "h2",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 34,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_cta_t",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#C8DEFF;font-family:'Inter',sans-serif;font-size:17px;\">Nuestro equipo te ayuda a encontrar el producto exacto que necesitas.</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "30",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "imp_cta_b",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Escríbenos ahora",
+                "link": {
+                  "url": "https://wa.me/57REEMPLAZAR_NUMERO",
+                  "is_external": true
+                },
+                "align": "center",
+                "background_color": "#FFFFFF",
+                "button_text_color": "#08428C",
+                "border_radius": {
+                  "top": "5",
+                  "right": "5",
+                  "bottom": "5",
+                  "left": "5",
+                  "unit": "px",
+                  "isLinked": true
+                },
+                "typography_font_family": "Inter",
+                "typography_font_weight": "700",
+                "typography_font_size": {
+                  "size": 16,
+                  "unit": "px"
+                },
+                "padding": {
+                  "top": "15",
+                  "right": "44",
+                  "bottom": "15",
+                  "left": "44",
+                  "unit": "px",
+                  "isLinked": false
+                },
+                "hover_background_color": "#EEF4FF"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "hide_title": "yes",
+    "page_layout": "elementor_canvas"
+  }
+}

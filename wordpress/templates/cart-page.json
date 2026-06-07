@@ -1,0 +1,220 @@
+{
+  "version": "0.4",
+  "title": "Imprelapp - Carrito",
+  "type": "page",
+  "content": [
+    {
+      "id": "cart_head_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#08428C",
+        "padding": {
+          "top": "50",
+          "right": "30",
+          "bottom": "50",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "cart_head_c",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "cart_head_h",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Tu Carrito de Compras",
+                "header_size": "h1",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 36,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cart_body_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F7F9FC",
+        "padding": {
+          "top": "60",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "cart_body_c",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "background_background": "classic",
+            "background_color": "#FFFFFF",
+            "border_border": "solid",
+            "border_color": "#E0E8F5",
+            "border_width": {
+              "top": "1",
+              "right": "1",
+              "bottom": "1",
+              "left": "1",
+              "unit": "px",
+              "isLinked": true
+            },
+            "border_radius": {
+              "top": "8",
+              "right": "8",
+              "bottom": "8",
+              "left": "8",
+              "unit": "px",
+              "isLinked": true
+            },
+            "padding": {
+              "top": "40",
+              "right": "40",
+              "bottom": "40",
+              "left": "40",
+              "unit": "px",
+              "isLinked": false
+            }
+          },
+          "elements": [
+            {
+              "id": "cart_sc_w",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[woocommerce_cart]"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cart_safe_s",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#EEF4FF",
+        "padding": {
+          "top": "30",
+          "right": "30",
+          "bottom": "30",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "cart_safe_c1",
+          "elType": "column",
+          "settings": { "_column_size": 33 },
+          "elements": [
+            {
+              "id": "cart_safe_w1",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": { "value": "fas fa-lock", "library": "fa-solid" },
+                "title_text": "Pago Seguro",
+                "description_text": "MercadoPago SSL",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "position": "left",
+                "content_align": "left",
+                "icon_size": { "size": 22, "unit": "px" },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "600",
+                "title_typography_font_size": { "size": 14, "unit": "px" },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": { "size": 12, "unit": "px" }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "cart_safe_c2",
+          "elType": "column",
+          "settings": { "_column_size": 33 },
+          "elements": [
+            {
+              "id": "cart_safe_w2",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": { "value": "fas fa-truck", "library": "fa-solid" },
+                "title_text": "Envío a Colombia",
+                "description_text": "Despacho a todo el país",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "position": "left",
+                "content_align": "left",
+                "icon_size": { "size": 22, "unit": "px" },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "600",
+                "title_typography_font_size": { "size": 14, "unit": "px" },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": { "size": 12, "unit": "px" }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "cart_safe_c3",
+          "elType": "column",
+          "settings": { "_column_size": 33 },
+          "elements": [
+            {
+              "id": "cart_safe_w3",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": { "value": "fas fa-headset", "library": "fa-solid" },
+                "title_text": "Soporte Técnico",
+                "description_text": "Atención personalizada",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "position": "left",
+                "content_align": "left",
+                "icon_size": { "size": 22, "unit": "px" },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "600",
+                "title_typography_font_size": { "size": 14, "unit": "px" },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": { "size": 12, "unit": "px" }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "hide_title": "yes",
+    "page_layout": "elementor_full_width"
+  }
+}
