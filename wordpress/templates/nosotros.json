@@ -1,0 +1,591 @@
+{
+  "version": "0.4",
+  "title": "Imprelapp - Nosotros",
+  "type": "page",
+  "content": [
+    {
+      "id": "rqzyt8e",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#051D40",
+        "padding": {
+          "top": "80",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "xzhsyhi",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "xvier94",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Sobre Imprelapp",
+                "header_size": "h1",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 46,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 34,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "k6kqmmz",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style='text-align:center;color:#C8DEFF;font-family:Inter,sans-serif;font-size:17px;'>Más de 20 años distribuyendo soluciones de transmisión de potencia en Colombia</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "y2szub2",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "top": "80",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "vzo5pvq",
+          "elType": "column",
+          "settings": {
+            "_column_size": 55
+          },
+          "elements": [
+            {
+              "id": "ehomo53",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Nuestra Historia",
+                "header_size": "h2",
+                "align": "left",
+                "title_color": "#08428C",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 32,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 20,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "16",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "0b46m07",
+              "elType": "widget",
+              "widgetType": "divider",
+              "settings": {
+                "color": "#08428C",
+                "weight": {
+                  "size": 3,
+                  "unit": "px"
+                },
+                "width": {
+                  "size": 60,
+                  "unit": "px"
+                },
+                "align": "left",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "32",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "271ppdq",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"color:#475569;font-family:Inter,sans-serif;font-size:15px;line-height:1.8;margin-bottom:16px;\">Imprelapp nació en 2004 como una pequeña ferretería industrial en Bogotá, Colombia. Fundada con la visión de brindar soluciones confiables de transmisión de potencia al sector industrial colombiano.</p><p style=\"color:#475569;font-family:Inter,sans-serif;font-size:15px;line-height:1.8;margin-bottom:16px;\">Con el paso de los años nos consolidamos como distribuidores autorizados de las marcas más reconocidas del mercado: SKF, FAG, Gates, NSK, Timken, Optibelt y Rexnord. Cada marca representa un estándar de calidad que respaldamos con garantía.</p><p style=\"color:#475569;font-family:Inter,sans-serif;font-size:15px;line-height:1.8;\">Hoy atendemos a más de 3.000 clientes activos en todo el país, desde talleres artesanales hasta grandes plantas industriales del sector minero, agroindustrial y manufacturero. Nuestro equipo técnico es nuestro mayor activo.</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "mr0mmje",
+          "elType": "column",
+          "settings": {
+            "_column_size": 45
+          },
+          "elements": [
+            {
+              "id": "c65fbyz",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#F8FAFC;border-radius:12px;padding:40px;border-left:4px solid #08428C;\"><div style=\"display:grid;grid-template-columns:1fr 1fr;gap:32px;\"><div style=\"text-align:center;\"><div style=\"font-family:Inter,sans-serif;font-weight:800;font-size:36px;color:#08428C;line-height:1;\">2004</div><div style=\"font-family:Inter,sans-serif;font-size:13px;color:#475569;margin-top:6px;\">Año de fundación</div></div><div style=\"text-align:center;\"><div style=\"font-family:Inter,sans-serif;font-weight:800;font-size:36px;color:#08428C;line-height:1;\">3.000+</div><div style=\"font-family:Inter,sans-serif;font-size:13px;color:#475569;margin-top:6px;\">Clientes activos</div></div><div style=\"text-align:center;\"><div style=\"font-family:Inter,sans-serif;font-weight:800;font-size:36px;color:#08428C;line-height:1;\">50.000+</div><div style=\"font-family:Inter,sans-serif;font-size:13px;color:#475569;margin-top:6px;\">Referencias en stock</div></div><div style=\"text-align:center;\"><div style=\"font-family:Inter,sans-serif;font-weight:800;font-size:36px;color:#08428C;line-height:1;\">8</div><div style=\"font-family:Inter,sans-serif;font-size:13px;color:#475569;margin-top:6px;\">Marcas autorizadas</div></div></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "z53zpm0",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F8FAFC",
+        "padding": {
+          "top": "70",
+          "right": "30",
+          "bottom": "70",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "af6vecn",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50
+          },
+          "elements": [
+            {
+              "id": "q83zs70",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#FFFFFF;border-radius:10px;padding:36px;border:1px solid #E2E8F0;height:100%;\"><div style=\"display:flex;align-items:center;gap:12px;margin-bottom:16px;\"><div style=\"width:40px;height:40px;background:#08428C;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;\">🎯</div><h3 style=\"font-family:Inter,sans-serif;font-weight:700;color:#08428C;font-size:20px;margin:0;\">Misión</h3></div><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:15px;line-height:1.8;margin:0;\">Proveer soluciones confiables de transmisión de potencia y ferretería industrial, garantizando calidad, disponibilidad y asesoría técnica especializada para mantener operando la industria colombiana.</p></div>"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "8tefp0e",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50
+          },
+          "elements": [
+            {
+              "id": "jiaingu",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#FFFFFF;border-radius:10px;padding:36px;border:1px solid #E2E8F0;height:100%;\"><div style=\"display:flex;align-items:center;gap:12px;margin-bottom:16px;\"><div style=\"width:40px;height:40px;background:#08428C;border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;\">🔭</div><h3 style=\"font-family:Inter,sans-serif;font-weight:700;color:#08428C;font-size:20px;margin:0;\">Visión</h3></div><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:15px;line-height:1.8;margin:0;\">Ser el distribuidor industrial de referencia en Colombia, reconocidos por nuestra expertise técnica, cobertura nacional y el compromiso con el éxito operacional de cada uno de nuestros clientes.</p></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4kj7yxe",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "top": "70",
+          "right": "30",
+          "bottom": "70",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "es6jz4v",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "kskghs2",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Nuestros Valores",
+                "header_size": "h2",
+                "align": "center",
+                "title_color": "#08428C",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 32,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 20,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "8",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "hauh83m",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style='text-align:center;color:#475569;font-family:Inter,sans-serif;font-size:15px;'>Los principios que guían cada decisión</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "48",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "bva8dkm",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "axq54v8",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-handshake",
+                  "library": "fa-solid"
+                },
+                "title_text": "Confianza",
+                "description_text": "Relaciones duraderas basadas en honestidad y cumplimiento.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#475569",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "title_typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": {
+                  "size": 13,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "homsgz4",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "p5u8myj",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-star",
+                  "library": "fa-solid"
+                },
+                "title_text": "Calidad",
+                "description_text": "Solo distribuimos productos originales de marcas certificadas.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#475569",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "title_typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": {
+                  "size": 13,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "j6dj48s",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "10zjros",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-bolt",
+                  "library": "fa-solid"
+                },
+                "title_text": "Agilidad",
+                "description_text": "Tu tiempo de producción es nuestro compromiso.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#475569",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "title_typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": {
+                  "size": 13,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "8kavezp",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "hpvfeya",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-microscope",
+                  "library": "fa-solid"
+                },
+                "title_text": "Expertise",
+                "description_text": "Equipo con formación en ingeniería mecánica e industrial.",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#475569",
+                "position": "top",
+                "content_align": "center",
+                "icon_size": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "title_typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": {
+                  "size": 13,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4tuja72",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#08428C",
+        "padding": {
+          "top": "60",
+          "right": "30",
+          "bottom": "60",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "3hjdpft",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "6i0taoc",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "¿Quieres trabajar con nosotros?",
+                "header_size": "h2",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 30,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 20,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "12",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "gegtv2i",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style='text-align:center;color:#C8DEFF;font-family:Inter,sans-serif;font-size:16px;'>Contáctanos para cotizaciones, distribución o alianzas comerciales</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "28",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "sj5ky9n",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;\"><a href=\"/contacto\" style=\"display:inline-block;background:#FFFFFF;color:#08428C;font-family:Inter,sans-serif;font-weight:700;font-size:15px;padding:15px 44px;border-radius:6px;text-decoration:none;\">Contáctanos</a></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "hide_title": "yes",
+    "page_layout": "elementor_full_width"
+  }
+}

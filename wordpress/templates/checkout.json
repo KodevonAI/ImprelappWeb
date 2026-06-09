@@ -1,0 +1,171 @@
+{
+  "version": "0.4",
+  "title": "Imprelapp - Finalizar Compra",
+  "type": "page",
+  "content": [
+    {
+      "id": "5gg90lc",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#051D40",
+        "padding": {
+          "top": "44",
+          "right": "30",
+          "bottom": "44",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "p805ae7",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "8gp9um7",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;\"><a href=\"/\" style=\"color:#94A3B8;font-family:Inter,sans-serif;font-size:13px;text-decoration:none;\">Inicio</a><span style=\"color:#64748B;\">›</span><a href=\"/carrito\" style=\"color:#94A3B8;font-family:Inter,sans-serif;font-size:13px;text-decoration:none;\">Carrito</a><span style=\"color:#64748B;\">›</span><span style=\"color:#FFFFFF;font-family:Inter,sans-serif;font-size:13px;\">Finalizar Compra</span></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "rzhgi0a",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Finalizar Compra",
+                "header_size": "h1",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 36,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 24,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yqjaoim",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F8FAFC",
+        "padding": {
+          "top": "50",
+          "right": "30",
+          "bottom": "70",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "b79jn3o",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "s5lvbmk",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#EEF4FF;border:1px solid #E2E8F0;border-radius:8px;padding:14px 20px;display:flex;align-items:center;gap:12px;margin-bottom:24px;\"><span style=\"font-size:18px;\">🔒</span><p style=\"font-family:Inter,sans-serif;font-size:14px;color:#08428C;margin:0;font-weight:600;\">Pago seguro. Tu información está protegida con encriptación SSL 256 bits.</p></div>"
+              },
+              "elements": []
+            },
+            {
+              "id": "6hponzz",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[woocommerce_checkout]"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3o32363",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "top": "24",
+          "right": "30",
+          "bottom": "24",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "border_border": "solid",
+        "border_color": "#E2E8F0",
+        "border_width": {
+          "top": "1",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "490xqd6",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "f8gef2t",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"text-align:center;\"><p style=\"font-family:Inter,sans-serif;font-size:12px;color:#475569;margin-bottom:10px;font-weight:600;letter-spacing:1px;\">MÉTODOS DE PAGO ACEPTADOS</p><div style=\"display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;\"><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">MercadoPago</span><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">PSE</span><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">Tarjeta Crédito</span><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">Tarjeta Débito</span><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">Efecty</span><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">Contra Entrega</span><span style=\"background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:7px 14px;font-family:Inter,sans-serif;font-size:12px;font-weight:700;color:#475569;\">Transferencia</span></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "hide_title": "yes",
+    "page_layout": "elementor_full_width"
+  }
+}

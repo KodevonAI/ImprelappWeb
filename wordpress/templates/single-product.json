@@ -1,131 +1,18 @@
 {
   "version": "0.4",
-  "title": "Imprelapp - Carrito",
+  "title": "Imprelapp - Producto",
   "type": "page",
   "content": [
     {
-      "id": "ffum8vv",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#051D40",
-        "padding": {
-          "top": "50",
-          "right": "30",
-          "bottom": "50",
-          "left": "30",
-          "unit": "px",
-          "isLinked": false
-        },
-        "css_classes": ""
-      },
-      "elements": [
-        {
-          "id": "nui3vsu",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "7i90hyv",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<div style=\"display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;\"><a href=\"/\" style=\"color:#94A3B8;font-family:Inter,sans-serif;font-size:13px;text-decoration:none;\">Inicio</a><span style=\"color:#64748B;font-size:13px;\">›</span><span style=\"color:#FFFFFF;font-family:Inter,sans-serif;font-size:13px;\">Carrito</span></div>"
-              },
-              "elements": []
-            },
-            {
-              "id": "qxch4dw",
-              "elType": "widget",
-              "widgetType": "heading",
-              "settings": {
-                "title": "Tu Carrito de Compras",
-                "header_size": "h1",
-                "align": "center",
-                "title_color": "#FFFFFF",
-                "typography_font_family": "Inter",
-                "typography_font_size": {
-                  "size": 38,
-                  "unit": "px"
-                },
-                "typography_font_size_mobile": {
-                  "size": 26,
-                  "unit": "px"
-                },
-                "typography_font_weight": "700",
-                "_margin": {
-                  "top": "0",
-                  "right": "0",
-                  "bottom": "0",
-                  "left": "0",
-                  "unit": "px",
-                  "isLinked": false
-                }
-              },
-              "elements": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "71vegnz",
+      "id": "i9ydmms",
       "elType": "section",
       "settings": {
         "background_background": "classic",
         "background_color": "#F8FAFC",
         "padding": {
-          "top": "50",
+          "top": "14",
           "right": "30",
-          "bottom": "70",
-          "left": "30",
-          "unit": "px",
-          "isLinked": false
-        },
-        "css_classes": ""
-      },
-      "elements": [
-        {
-          "id": "9zkspuo",
-          "elType": "column",
-          "settings": {
-            "_column_size": 100
-          },
-          "elements": [
-            {
-              "id": "rzwia4m",
-              "elType": "widget",
-              "widgetType": "html",
-              "settings": {
-                "html": "<div style=\"background:#EEF4FF;border:1px solid #E2E8F0;border-radius:8px;padding:14px 20px;display:flex;align-items:center;gap:12px;margin-bottom:24px;\"><span style=\"font-size:18px;\">ℹ️</span><p style=\"font-family:Inter,sans-serif;font-size:14px;color:#08428C;margin:0;\">Los precios incluyen IVA cuando aplica. El envío se calcula al finalizar la compra.</p></div>"
-              },
-              "elements": []
-            },
-            {
-              "id": "i9yzj4q",
-              "elType": "widget",
-              "widgetType": "shortcode",
-              "settings": {
-                "shortcode": "[woocommerce_cart]"
-              },
-              "elements": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "7gva6zx",
-      "elType": "section",
-      "settings": {
-        "background_background": "classic",
-        "background_color": "#EEF4FF",
-        "padding": {
-          "top": "28",
-          "right": "30",
-          "bottom": "28",
+          "bottom": "14",
           "left": "30",
           "unit": "px",
           "isLinked": false
@@ -133,9 +20,9 @@
         "border_border": "solid",
         "border_color": "#E2E8F0",
         "border_width": {
-          "top": "1",
+          "top": "0",
           "right": "0",
-          "bottom": "0",
+          "bottom": "1",
           "left": "0",
           "unit": "px",
           "isLinked": false
@@ -144,23 +31,97 @@
       },
       "elements": [
         {
-          "id": "di2s9zv",
+          "id": "qzm397f",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "khr4ap9",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[woocommerce_breadcrumb]"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cogi5je",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "top": "50",
+          "right": "30",
+          "bottom": "60",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "mg7y5hh",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "ockc8nh",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#EEF4FF;border-radius:8px;padding:16px 20px;border:1px solid #E2E8F0;margin-bottom:24px;\"><p style=\"font-family:Inter,sans-serif;font-size:14px;color:#08428C;margin:0;font-weight:600;\">ℹ️ Para personalizar esta página completamente: <strong>Elementor → Theme Builder → Single → Crear nueva → Single Product</strong> y usa los widgets de WooCommerce (Imagen de producto, Título, Precio, Añadir al carrito, Tabs).</p></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fkf3ci3",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#EEF4FF",
+        "padding": {
+          "top": "30",
+          "right": "30",
+          "bottom": "30",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "z5q7ktp",
           "elType": "column",
           "settings": {
             "_column_size": 25
           },
           "elements": [
             {
-              "id": "twjh3yb",
+              "id": "mltkn9m",
               "elType": "widget",
               "widgetType": "icon-box",
               "settings": {
                 "selected_icon": {
-                  "value": "fas fa-lock",
+                  "value": "fas fa-certificate",
                   "library": "fa-solid"
                 },
-                "title_text": "Pago Seguro",
-                "description_text": "SSL + MercadoPago certificado",
+                "title_text": "Producto Original",
+                "description_text": "100% auténtico garantizado",
                 "icon_color": "#08428C",
                 "title_color": "#08428C",
                 "description_color": "#475569",
@@ -187,14 +148,14 @@
           ]
         },
         {
-          "id": "4j8mrn1",
+          "id": "48ff9n3",
           "elType": "column",
           "settings": {
             "_column_size": 25
           },
           "elements": [
             {
-              "id": "7gnefm2",
+              "id": "h3sl79x",
               "elType": "widget",
               "widgetType": "icon-box",
               "settings": {
@@ -202,8 +163,8 @@
                   "value": "fas fa-truck",
                   "library": "fa-solid"
                 },
-                "title_text": "Envío Colombia",
-                "description_text": "2–5 días hábiles",
+                "title_text": "Envío Express",
+                "description_text": "Bogotá 24h · Nacional 2–5 días",
                 "icon_color": "#08428C",
                 "title_color": "#08428C",
                 "description_color": "#475569",
@@ -230,66 +191,23 @@
           ]
         },
         {
-          "id": "w7oxigk",
+          "id": "ylmp6oe",
           "elType": "column",
           "settings": {
             "_column_size": 25
           },
           "elements": [
             {
-              "id": "4kw812o",
+              "id": "8rco7yh",
               "elType": "widget",
               "widgetType": "icon-box",
               "settings": {
                 "selected_icon": {
-                  "value": "fas fa-undo",
-                  "library": "fa-solid"
-                },
-                "title_text": "Productos Originales",
-                "description_text": "Garantía de autenticidad",
-                "icon_color": "#08428C",
-                "title_color": "#08428C",
-                "description_color": "#475569",
-                "position": "left",
-                "content_align": "left",
-                "icon_size": {
-                  "size": 38,
-                  "unit": "px"
-                },
-                "title_typography_font_family": "Inter",
-                "title_typography_font_weight": "700",
-                "title_typography_font_size": {
-                  "size": 15,
-                  "unit": "px"
-                },
-                "description_typography_font_family": "Inter",
-                "description_typography_font_size": {
-                  "size": 13,
-                  "unit": "px"
-                }
-              },
-              "elements": []
-            }
-          ]
-        },
-        {
-          "id": "w0jcxye",
-          "elType": "column",
-          "settings": {
-            "_column_size": 25
-          },
-          "elements": [
-            {
-              "id": "753b0om",
-              "elType": "widget",
-              "widgetType": "icon-box",
-              "settings": {
-                "selected_icon": {
-                  "value": "fas fa-headset",
+                  "value": "fas fa-phone-alt",
                   "library": "fa-solid"
                 },
                 "title_text": "Soporte Técnico",
-                "description_text": "Asesoría especializada",
+                "description_text": "Consultas de compatibilidad",
                 "icon_color": "#08428C",
                 "title_color": "#08428C",
                 "description_color": "#475569",
@@ -310,6 +228,116 @@
                   "size": 13,
                   "unit": "px"
                 }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "3xfhufi",
+          "elType": "column",
+          "settings": {
+            "_column_size": 25
+          },
+          "elements": [
+            {
+              "id": "c1z0700",
+              "elType": "widget",
+              "widgetType": "icon-box",
+              "settings": {
+                "selected_icon": {
+                  "value": "fas fa-file-invoice",
+                  "library": "fa-solid"
+                },
+                "title_text": "Factura Electrónica",
+                "description_text": "Facturación incluida",
+                "icon_color": "#08428C",
+                "title_color": "#08428C",
+                "description_color": "#475569",
+                "position": "left",
+                "content_align": "left",
+                "icon_size": {
+                  "size": 38,
+                  "unit": "px"
+                },
+                "title_typography_font_family": "Inter",
+                "title_typography_font_weight": "700",
+                "title_typography_font_size": {
+                  "size": 15,
+                  "unit": "px"
+                },
+                "description_typography_font_family": "Inter",
+                "description_typography_font_size": {
+                  "size": 13,
+                  "unit": "px"
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fvf2sba",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F8FAFC",
+        "padding": {
+          "top": "60",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "7kkfuyb",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "cwpgjtl",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Productos Relacionados",
+                "header_size": "h2",
+                "align": "left",
+                "title_color": "#08428C",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 26,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 20,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "32",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "rta3o63",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[products limit=\"4\" columns=\"4\" orderby=\"rand\"]"
               },
               "elements": []
             }

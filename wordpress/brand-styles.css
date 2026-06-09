@@ -1,0 +1,139 @@
+/* ============================================
+   IMPRELAPP — Estilos de Marca Globales
+   Pegar en: Apariencia → Personalizar → CSS adicional
+   O en: Elementor → Site Settings → Custom CSS
+   ============================================ */
+
+/* --- Tipografía Inter --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body, h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea {
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Colores WooCommerce → Marca Imprelapp --- */
+
+/* Botón principal (Añadir al carrito, Finalizar compra, etc.) */
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit,
+.woocommerce .cart .button,
+.woocommerce .cart input.button,
+.woocommerce #payment #place_order,
+.woocommerce-page #payment #place_order {
+    background-color: #08428C !important;
+    color: #ffffff !important;
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 600 !important;
+    border-radius: 5px !important;
+    border: none !important;
+    transition: background-color 0.2s ease;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover,
+.woocommerce #payment #place_order:hover {
+    background-color: #034C8C !important;
+    color: #ffffff !important;
+}
+
+/* Botón alt (Ver carrito, Continuar comprando) */
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
+    background-color: #034C8C !important;
+    color: #ffffff !important;
+}
+
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover {
+    background-color: #08428C !important;
+}
+
+/* Links globales */
+a {
+    color: #08428C;
+}
+a:hover {
+    color: #034C8C;
+}
+
+/* --- WooCommerce Precios --- */
+.woocommerce .price,
+.woocommerce .amount {
+    color: #08428C;
+    font-weight: 700;
+}
+
+/* --- Badges (Nuevo, Oferta) --- */
+.woocommerce span.onsale {
+    background-color: #08428C;
+    border-radius: 4px;
+}
+
+/* --- Breadcrumbs --- */
+.woocommerce .woocommerce-breadcrumb a {
+    color: #08428C;
+}
+
+/* --- Mensajes de éxito/info WC --- */
+.woocommerce-message,
+.woocommerce-info {
+    border-top-color: #08428C !important;
+}
+
+.woocommerce-message::before,
+.woocommerce-info::before {
+    color: #08428C !important;
+}
+
+/* --- Tabs de producto (Descripción, Reseñas) --- */
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a,
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+    border-bottom-color: #08428C;
+    color: #08428C;
+}
+
+/* --- Rating estrellas --- */
+.woocommerce .star-rating span::before,
+.woocommerce .star-rating::before {
+    color: #08428C;
+}
+
+/* --- Input focus global --- */
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #08428C !important;
+    box-shadow: 0 0 0 3px rgba(8, 66, 140, 0.12) !important;
+    outline: none !important;
+}
+
+/* --- Carrito: tabla responsive --- */
+@media (max-width: 768px) {
+    .woocommerce-cart-form__cart-item td {
+        font-size: 14px;
+    }
+}
+
+/* --- Página de tienda: título de producto hover --- */
+.woocommerce ul.products li.product .woocommerce-loop-product__title:hover {
+    color: #08428C;
+}
+
+/* --- Checkout: secciones --- */
+.woocommerce .woocommerce-checkout h3 {
+    color: #08428C;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}
+
+/* --- Totales del carrito --- */
+.cart_totals h2,
+.woocommerce-checkout-review-order-table thead th {
+    color: #08428C;
+    font-family: 'Inter', sans-serif;
+}

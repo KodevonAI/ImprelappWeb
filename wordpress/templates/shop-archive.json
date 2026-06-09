@@ -1,0 +1,170 @@
+{
+  "version": "0.4",
+  "title": "Imprelapp - Tienda",
+  "type": "page",
+  "content": [
+    {
+      "id": "44hhfbu",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#051D40",
+        "padding": {
+          "top": "50",
+          "right": "30",
+          "bottom": "50",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "nx0j4dw",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "biah4ku",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Catálogo de Productos",
+                "header_size": "h1",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 40,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 28,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "12",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "6suwyx0",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style='text-align:center;color:#C8DEFF;font-family:Inter,sans-serif;font-size:15px;'>Rodamientos · Piñones · Correas · Ferretería Industrial</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "l2mm9us",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#EEF4FF",
+        "padding": {
+          "top": "18",
+          "right": "30",
+          "bottom": "18",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "border_border": "solid",
+        "border_color": "#E2E8F0",
+        "border_width": {
+          "top": "0",
+          "right": "0",
+          "bottom": "1",
+          "left": "0",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "81bt3th",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "7iipjsm",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"display:flex;flex-wrap:wrap;gap:10px;align-items:center;\"><span style=\"font-family:Inter,sans-serif;font-weight:600;color:#08428C;font-size:14px;margin-right:4px;\">Categorías:</span><a href=\"/tienda\" style=\"display:inline-block;background:#FFFFFF;color:#475569;border:1px solid #E2E8F0;font-family:Inter,sans-serif;font-size:13px;font-weight:500;padding:6px 16px;border-radius:20px;text-decoration:none;\">Todos</a><a href=\"/categoria-producto/rodamientos\" style=\"display:inline-block;background:#FFFFFF;color:#475569;border:1px solid #E2E8F0;font-family:Inter,sans-serif;font-size:13px;font-weight:500;padding:6px 16px;border-radius:20px;text-decoration:none;\">Rodamientos</a><a href=\"/categoria-producto/pinones\" style=\"display:inline-block;background:#FFFFFF;color:#475569;border:1px solid #E2E8F0;font-family:Inter,sans-serif;font-size:13px;font-weight:500;padding:6px 16px;border-radius:20px;text-decoration:none;\">Piñones</a><a href=\"/categoria-producto/correas\" style=\"display:inline-block;background:#FFFFFF;color:#475569;border:1px solid #E2E8F0;font-family:Inter,sans-serif;font-size:13px;font-weight:500;padding:6px 16px;border-radius:20px;text-decoration:none;\">Correas</a><a href=\"/categoria-producto/ferreteria\" style=\"display:inline-block;background:#FFFFFF;color:#475569;border:1px solid #E2E8F0;font-family:Inter,sans-serif;font-size:13px;font-weight:500;padding:6px 16px;border-radius:20px;text-decoration:none;\">Ferretería</a></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yqv8sxx",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F8FAFC",
+        "padding": {
+          "top": "50",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "ltlrwaw",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "rhlqa2q",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[products limit=\"12\" columns=\"4\" orderby=\"date\" order=\"DESC\" paginate=\"true\"]"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "hide_title": "yes",
+    "page_layout": "elementor_full_width"
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "version": "0.4",
+  "title": "Imprelapp - Contacto",
+  "type": "page",
+  "content": [
+    {
+      "id": "sbw14r0",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#051D40",
+        "padding": {
+          "top": "70",
+          "right": "30",
+          "bottom": "70",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "6baww97",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "t6dpuwn",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Contáctanos",
+                "header_size": "h1",
+                "align": "center",
+                "title_color": "#FFFFFF",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 44,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 32,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "14",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "2864bfs",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style='text-align:center;color:#C8DEFF;font-family:Inter,sans-serif;font-size:17px;'>Cotizaciones, soporte técnico y pedidos — respondemos en menos de 2 horas</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aqh9hw2",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#F8FAFC",
+        "padding": {
+          "top": "70",
+          "right": "30",
+          "bottom": "70",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "2envhds",
+          "elType": "column",
+          "settings": {
+            "_column_size": 33
+          },
+          "elements": [
+            {
+              "id": "sdfhphb",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#FFFFFF;border-radius:10px;padding:32px 24px;text-align:center;border:1px solid #E2E8F0;border-top:4px solid #08428C;\"><div style=\"font-size:34px;margin-bottom:14px;\">📞</div><h3 style=\"font-family:Inter,sans-serif;font-weight:700;color:#08428C;font-size:17px;margin:0 0 8px;\">Teléfono / WhatsApp</h3><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:14px;margin:0 0 4px;\">+57 REEMPLAZAR_NUMERO</p><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:13px;margin:0;\">Lun–Vie 8am–6pm · Sáb 8am–1pm</p></div>"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "l9pvz36",
+          "elType": "column",
+          "settings": {
+            "_column_size": 33
+          },
+          "elements": [
+            {
+              "id": "cz71wjg",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#FFFFFF;border-radius:10px;padding:32px 24px;text-align:center;border:1px solid #E2E8F0;border-top:4px solid #08428C;\"><div style=\"font-size:34px;margin-bottom:14px;\">✉️</div><h3 style=\"font-family:Inter,sans-serif;font-weight:700;color:#08428C;font-size:17px;margin:0 0 8px;\">Correo Electrónico</h3><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:14px;margin:0 0 4px;\">ventas@imprelapp.com</p><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:13px;margin:0;\">cotizaciones@imprelapp.com</p></div>"
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "y7l6iwq",
+          "elType": "column",
+          "settings": {
+            "_column_size": 33
+          },
+          "elements": [
+            {
+              "id": "izje35b",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#FFFFFF;border-radius:10px;padding:32px 24px;text-align:center;border:1px solid #E2E8F0;border-top:4px solid #08428C;\"><div style=\"font-size:34px;margin-bottom:14px;\">📍</div><h3 style=\"font-family:Inter,sans-serif;font-weight:700;color:#08428C;font-size:17px;margin:0 0 8px;\">Dirección</h3><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:14px;margin:0 0 4px;\">REEMPLAZAR_DIRECCIÓN</p><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:13px;margin:0;\">Bogotá, Colombia</p></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c3n2a0h",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#FFFFFF",
+        "padding": {
+          "top": "70",
+          "right": "30",
+          "bottom": "80",
+          "left": "30",
+          "unit": "px",
+          "isLinked": false
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "l43q3fx",
+          "elType": "column",
+          "settings": {
+            "_column_size": 60
+          },
+          "elements": [
+            {
+              "id": "5arlkww",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Envíanos tu Cotización",
+                "header_size": "h2",
+                "align": "left",
+                "title_color": "#08428C",
+                "typography_font_family": "Inter",
+                "typography_font_size": {
+                  "size": 28,
+                  "unit": "px"
+                },
+                "typography_font_size_mobile": {
+                  "size": 20,
+                  "unit": "px"
+                },
+                "typography_font_weight": "700",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "8",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "fwzgwx3",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"color:#475569;font-family:Inter,sans-serif;font-size:15px;margin-bottom:28px;\">Déjanos tus datos y la referencia del producto. Te respondemos con precio y disponibilidad.</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            },
+            {
+              "id": "qs9iwx3",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[contact-form-7 id=\"REEMPLAZAR_ID_CF7\" title=\"Cotización Imprelapp\"]"
+              },
+              "elements": []
+            },
+            {
+              "id": "o1amdpa",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"color:#475569;font-family:Inter,sans-serif;font-size:12px;margin-top:12px;\">Requiere plugin Contact Form 7 instalado y activado.</p>",
+                "_margin": {
+                  "top": "0",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "0",
+                  "unit": "px",
+                  "isLinked": false
+                }
+              },
+              "elements": []
+            }
+          ]
+        },
+        {
+          "id": "9qorl12",
+          "elType": "column",
+          "settings": {
+            "_column_size": 40
+          },
+          "elements": [
+            {
+              "id": "4ouecx9",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"background:#F8FAFC;border-radius:10px;padding:32px;border:1px solid #E2E8F0;\"><h3 style=\"font-family:Inter,sans-serif;font-weight:700;color:#08428C;font-size:18px;margin:0 0 20px;\">Horario de Atención</h3><div style=\"display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2E8F0;\"><span style=\"font-family:Inter,sans-serif;color:#0F172A;font-size:14px;\">Lunes – Viernes</span><span style=\"font-family:Inter,sans-serif;color:#475569;font-size:14px;\">8:00 am – 6:00 pm</span></div><div style=\"display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2E8F0;\"><span style=\"font-family:Inter,sans-serif;color:#0F172A;font-size:14px;\">Sábado</span><span style=\"font-family:Inter,sans-serif;color:#475569;font-size:14px;\">8:00 am – 1:00 pm</span></div><div style=\"display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2E8F0;\"><span style=\"font-family:Inter,sans-serif;color:#0F172A;font-size:14px;\">Domingo</span><span style=\"font-family:Inter,sans-serif;color:#475569;font-size:14px;\">Cerrado</span></div><div style=\"margin-top:20px;padding:14px;background:#EEF4FF;border-radius:8px;\"><p style=\"font-family:Inter,sans-serif;font-size:13px;color:#08428C;margin:0;font-weight:600;\">Pedidos urgentes</p><p style=\"font-family:Inter,sans-serif;font-size:13px;color:#475569;margin:6px 0 0;\">WhatsApp disponible para emergencias industriales fuera de horario.</p></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kj4i5b9",
+      "elType": "section",
+      "settings": {
+        "background_background": "classic",
+        "background_color": "#E2E8F0",
+        "padding": {
+          "top": "0",
+          "right": "0",
+          "bottom": "0",
+          "left": "0",
+          "unit": "px",
+          "isLinked": true
+        },
+        "css_classes": ""
+      },
+      "elements": [
+        {
+          "id": "zg1olgd",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "ijoilv8",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div style=\"width:100%;height:350px;background:#F8FAFC;display:flex;align-items:center;justify-content:center;border-top:4px solid #08428C;\"><div style=\"text-align:center;\"><div style=\"font-size:44px;margin-bottom:12px;\">🗺️</div><p style=\"font-family:Inter,sans-serif;color:#475569;font-size:15px;\">Agrega aquí un widget Google Maps de Elementor o un iframe de Google Maps</p></div></div>"
+              },
+              "elements": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "page_settings": {
+    "hide_title": "yes",
+    "page_layout": "elementor_full_width"
+  }
+}
