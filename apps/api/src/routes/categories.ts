@@ -17,10 +17,19 @@ const categorySchema = z.object({
   active: z.boolean().optional(),
 })
 
-// Public: get all active categories
+const publicColumns = {
+  id: categories.id,
+  name: categories.name,
+  slug: categories.slug,
+  parentId: categories.parentId,
+  image: categories.image,
+  description: categories.description,
+}
+
+// Public: get all active categories, as a tree
 router.get('/', async (_req, res) => {
   const all = await db
-    .select()
+    .select(publicColumns)
     .from(categories)
     .where(eq(categories.active, true))
     .orderBy(asc(categories.order), asc(categories.name))
@@ -40,8 +49,36 @@ router.get('/', async (_req, res) => {
   res.json(roots)
 })
 
-// Public: flat list (for selects)
+// Public: flat list of active categories (for selects/breadcrumbs)
 router.get('/flat', async (_req, res) => {
+  const all = await db
+    .select(publicColumns)
+    .from(categories)
+    .where(eq(categories.active, true))
+    .orderBy(asc(categories.order), asc(categories.name))
+  res.json(all)
+})
+
+// Admin: full tree, all statuses
+router.get('/admin', requireAuth, async (_req, res) => {
+  const all = await db.select().from(categories).orderBy(asc(categories.order), asc(categories.name))
+
+  const map = new Map(all.map((c) => [c.id, { ...c, children: [] as typeof all }]))
+  const roots: typeof all = []
+
+  for (const cat of map.values()) {
+    if (cat.parentId) {
+      map.get(cat.parentId)?.children.push(cat)
+    } else {
+      roots.push(cat)
+    }
+  }
+
+  res.json(roots)
+})
+
+// Admin: full flat list, all statuses
+router.get('/admin/flat', requireAuth, async (_req, res) => {
   const all = await db.select().from(categories).orderBy(asc(categories.order), asc(categories.name))
   res.json(all)
 })

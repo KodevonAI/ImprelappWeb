@@ -1,4 +1,3 @@
-import { PublicLayout } from '@/components/public/public-layout'
 import { ContactForm } from '@/components/public/contact-form'
 import { Mail, MapPin, MessageCircle } from 'lucide-react'
 
@@ -11,7 +10,6 @@ export const metadata = {
 
 export default function ContactoPage() {
   return (
-    <PublicLayout>
       <section className="container mx-auto max-w-5xl px-4 py-12 md:py-16">
         <h1 className="text-3xl font-bold tracking-tight mb-2">Contáctanos</h1>
         <p className="text-muted-foreground mb-10">
@@ -67,6 +65,5 @@ export default function ContactoPage() {
           </div>
         </div>
       </section>
-    </PublicLayout>
   )
 }

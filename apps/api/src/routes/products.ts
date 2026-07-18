@@ -60,8 +60,6 @@ router.get('/', async (req: Request, res: Response) => {
       comparePrice: products.comparePrice,
       stock: products.stock,
       featured: products.featured,
-      active: products.active,
-      createdAt: products.createdAt,
       categoryId: products.categoryId,
       categoryName: categories.name,
       categorySlug: categories.slug,
@@ -74,7 +72,7 @@ router.get('/', async (req: Request, res: Response) => {
     .offset((page - 1) * pageSize)
 
   res.json({
-    data: rows,
+    data: rows.map(({ stock, ...row }) => ({ ...row, inStock: stock > 0 })),
     total,
     page,
     pageSize,
@@ -82,13 +80,43 @@ router.get('/', async (req: Request, res: Response) => {
   })
 })
 
-// Public: single product by slug
-router.get('/:slug', async (req: Request, res: Response) => {
-  const [product] = await db
-    .select()
+// Admin: list products (all statuses, full fields) — must be mounted before GET /:slug
+router.get('/admin', requireAuth, async (req: Request, res: Response) => {
+  const page = Math.max(1, Number(req.query.page ?? 1))
+  const pageSize = Math.min(50, Math.max(1, Number(req.query.pageSize ?? 20)))
+  const search = String(req.query.search ?? '')
+
+  const conditions = search ? [ilike(products.name, `%${search}%`)] : []
+  const where = conditions.length ? and(...conditions) : undefined
+
+  const [{ total }] = await db.select({ total: count() }).from(products).where(where)
+  const rows = await db
+    .select({
+      id: products.id,
+      name: products.name,
+      slug: products.slug,
+      price: products.price,
+      stock: products.stock,
+      active: products.active,
+      featured: products.featured,
+      createdAt: products.createdAt,
+      categoryId: products.categoryId,
+      categoryName: categories.name,
+    })
     .from(products)
-    .where(and(eq(products.slug, String(req.params.slug)), eq(products.active, true)))
-    .limit(1)
+    .leftJoin(categories, eq(products.categoryId, categories.id))
+    .where(where)
+    .orderBy(desc(products.createdAt))
+    .limit(pageSize)
+    .offset((page - 1) * pageSize)
+
+  res.json({ data: rows, total, page, pageSize, totalPages: Math.ceil(total / pageSize) })
+})
+
+// Admin: single product by numeric id (any status)
+router.get('/admin/:id', requireAuth, async (req: Request, res: Response) => {
+  const id = Number(req.params.id)
+  const [product] = await db.select().from(products).where(eq(products.id, id)).limit(1)
 
   if (!product) {
     res.status(404).json({ error: 'Producto no encontrado' })
@@ -106,6 +134,48 @@ router.get('/:slug', async (req: Request, res: Response) => {
     : []
 
   res.json({ ...product, images, category: category ?? null })
+})
+
+// Public: single product by slug
+router.get('/:slug', async (req: Request, res: Response) => {
+  const [product] = await db
+    .select({
+      id: products.id,
+      name: products.name,
+      slug: products.slug,
+      description: products.description,
+      price: products.price,
+      comparePrice: products.comparePrice,
+      sku: products.sku,
+      stock: products.stock,
+      categoryId: products.categoryId,
+      featured: products.featured,
+    })
+    .from(products)
+    .where(and(eq(products.slug, String(req.params.slug)), eq(products.active, true)))
+    .limit(1)
+
+  if (!product) {
+    res.status(404).json({ error: 'Producto no encontrado' })
+    return
+  }
+
+  const images = await db
+    .select()
+    .from(productImages)
+    .where(eq(productImages.productId, product.id))
+    .orderBy(asc(productImages.order))
+
+  const [category] = product.categoryId
+    ? await db
+        .select({ id: categories.id, name: categories.name, slug: categories.slug })
+        .from(categories)
+        .where(eq(categories.id, product.categoryId))
+        .limit(1)
+    : []
+
+  const { stock, ...publicProduct } = product
+  res.json({ ...publicProduct, inStock: stock > 0, images, category: category ?? null })
 })
 
 // Admin: create product

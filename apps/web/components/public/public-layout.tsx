@@ -1,14 +1,10 @@
 import { Navbar } from './navbar'
 import { Footer } from './footer'
-import { publicGet } from '@/lib/public-api'
-import type { Category } from '@imprelapp/types'
+import { getCategories } from '@/lib/data/public'
 
 export async function PublicLayout({ children }: { children: React.ReactNode }) {
-  let topCategories: Category[] = []
-  try {
-    const all = await publicGet<Category[]>('/api/categories')
-    topCategories = all.filter((c) => !c.parentId).slice(0, 6)
-  } catch {}
+  const all = await getCategories()
+  const topCategories = all.filter((c) => !c.parentId).slice(0, 6)
 
   return (
     <div className="min-h-screen flex flex-col">

@@ -14,12 +14,12 @@ export function Footer() {
             </div>
             <span className="font-bold text-white">IMPRELAPP</span>
           </div>
-          <p className="text-sm text-gray-400">Rodamientos, Piñones, Correas y Ferretería Industrial. Colombia.</p>
+          <p className="text-sm text-gray-400">Herramientas, repuestos y equipo para tu negocio. Colombia.</p>
         </div>
         <div>
           <p className="font-semibold text-white mb-3 text-sm">Categorías</p>
           <ul className="space-y-1.5 text-sm">
-            {['Rodamientos', 'Piñones', 'Correas', 'Ferretería'].map((cat) => (
+            {['Herramientas Eléctricas', 'Herramientas Manuales', 'Repuestos Automotrices', 'Carretillas y Equipos'].map((cat) => (
               <li key={cat}>
                 <Link href={`/productos?search=${cat.toLowerCase()}`} className="hover:text-white transition-colors">{cat}</Link>
               </li>

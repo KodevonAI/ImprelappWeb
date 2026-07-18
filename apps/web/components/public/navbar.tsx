@@ -51,7 +51,7 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
           </div>
           <div className="hidden sm:block">
             <p className="font-bold text-sm leading-tight text-foreground">IMPRELAPP</p>
-            <p className="text-xs text-muted-foreground leading-tight">Ferretería Industrial</p>
+            <p className="text-xs text-muted-foreground leading-tight">Herramientas y Ferretería</p>
           </div>
         </Link>
 
@@ -63,7 +63,7 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
               ref={inputRef}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar rodamientos, correas, piñones..."
+              placeholder="Buscar taladros, martillos, repuestos..."
               className="w-full h-10 pl-9 pr-4 rounded-lg border bg-muted/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-background"
             />
           </div>

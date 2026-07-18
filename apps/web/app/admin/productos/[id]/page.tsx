@@ -1,21 +1,19 @@
 import { notFound } from 'next/navigation'
 import { AdminHeader } from '@/components/admin/header'
 import { ProductForm } from '@/components/admin/product-form'
-import { serverGet } from '@/lib/server-api'
+import { getAdminProductById, getAdminCategoriesFlat, type AdminProductDetail } from '@/lib/data/admin'
 import { updateProduct } from '../actions'
-import type { Category, Product, ProductImage } from '@imprelapp/types'
-
-type ProductDetail = Product & { images: ProductImage[]; category: Pick<Category, 'id' | 'name' | 'slug'> | null }
+import type { Category } from '@imprelapp/types'
 
 export default async function EditarProductoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  let product: ProductDetail | null = null
+  let product: AdminProductDetail | null = null
   let categories: Category[] = []
 
   try {
     ;[product, categories] = await Promise.all([
-      serverGet<ProductDetail>(`/api/products/${id}`),
-      serverGet<Category[]>('/api/categories/flat'),
+      getAdminProductById(id),
+      getAdminCategoriesFlat(),
     ])
   } catch {
     notFound()

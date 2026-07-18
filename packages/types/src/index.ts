@@ -36,6 +36,44 @@ export interface Product {
   images?: ProductImage[]
 }
 
+export interface CategoryPublic {
+  id: number
+  name: string
+  slug: string
+  parentId: number | null
+  image: string | null
+  description: string | null
+  children?: CategoryPublic[]
+}
+
+export interface ProductListItemPublic {
+  id: number
+  name: string
+  slug: string
+  price: string
+  comparePrice: string | null
+  inStock: boolean
+  featured: boolean
+  categoryId: number | null
+  categoryName: string | null
+  categorySlug: string | null
+}
+
+export interface ProductPublic {
+  id: number
+  name: string
+  slug: string
+  description: string | null
+  price: string
+  comparePrice: string | null
+  sku: string | null
+  inStock: boolean
+  categoryId: number | null
+  featured: boolean
+  category?: Pick<Category, 'id' | 'name' | 'slug'> | null
+  images?: ProductImage[]
+}
+
 export interface Message {
   id: number
   name: string

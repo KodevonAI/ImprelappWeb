@@ -1,14 +1,12 @@
 import Link from 'next/link'
 import { AdminHeader } from '@/components/admin/header'
-import { serverGet } from '@/lib/server-api'
+import { getMessages, type MessageWithProduct } from '@/lib/data/admin'
 import { buttonVariants } from '@/components/ui/button'
 import { MessageRow } from './message-row'
 import { cn } from '@/lib/utils'
-import type { Message, PaginatedResponse } from '@imprelapp/types'
+import type { PaginatedResponse } from '@imprelapp/types'
 
 export const metadata = { title: 'Mensajes' }
-
-type MessageWithProduct = Message & { productName?: string | null }
 
 const filterOptions = [
   { value: '', label: 'Todos' },
@@ -23,11 +21,10 @@ export default async function MensajesPage({
   searchParams: Promise<{ page?: string; status?: string }>
 }) {
   const { page = '1', status = '' } = await searchParams
-  const params = new URLSearchParams({ page, pageSize: '20', ...(status ? { status } : {}) })
 
   let result: PaginatedResponse<MessageWithProduct> | null = null
   try {
-    result = await serverGet<PaginatedResponse<MessageWithProduct>>(`/api/messages?${params}`)
+    result = await getMessages({ page: Number(page), pageSize: 20, status: status || undefined })
   } catch {}
 
   return (

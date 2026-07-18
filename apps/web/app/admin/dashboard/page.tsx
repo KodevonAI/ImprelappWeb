@@ -1,22 +1,8 @@
 import { AdminHeader } from '@/components/admin/header'
-import { serverGet } from '@/lib/server-api'
+import { getDashboardStats, type DashboardStats } from '@/lib/data/admin'
 import { Badge } from '@/components/ui/badge'
 import { Package, Tag, MessageSquare, AlertTriangle } from 'lucide-react'
 import { formatDistanceToNow } from '@/lib/format'
-
-interface DashboardData {
-  totalProducts: number
-  totalCategories: number
-  newMessages: number
-  lowStock: number
-  recentMessages: Array<{
-    id: number
-    name: string
-    subject: string
-    createdAt: string
-    status: 'new' | 'read' | 'replied'
-  }>
-}
 
 const statusLabel: Record<string, { label: string; variant: 'default' | 'secondary' | 'outline' }> = {
   new: { label: 'Nuevo', variant: 'default' },
@@ -25,11 +11,11 @@ const statusLabel: Record<string, { label: string; variant: 'default' | 'seconda
 }
 
 export default async function DashboardPage() {
-  let data: DashboardData | null = null
+  let data: DashboardStats | null = null
   let error = false
 
   try {
-    data = await serverGet<DashboardData>('/api/dashboard')
+    data = await getDashboardStats()
   } catch {
     error = true
   }

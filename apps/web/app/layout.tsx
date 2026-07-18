@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://imprelapp.com'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Imprelapp — Rodamientos, Piñones, Correas y Ferretería',
+    default: 'Imprelapp — Herramientas y Ferretería para tu Negocio',
     template: '%s | Imprelapp',
   },
-  description: 'Ferretería industrial Imprelapp. Rodamientos, piñones, correas y más. Envíos a toda Colombia.',
-  keywords: ['rodamientos', 'piñones', 'correas', 'ferretería industrial', 'Colombia'],
+  description: 'Imprelapp: importadora de herramientas eléctricas, manuales, repuestos automotrices y equipo de carga. Envíos a toda Colombia.',
+  keywords: ['herramientas', 'ferretería', 'taladros', 'repuestos automotrices', 'carretillas', 'Colombia'],
   openGraph: {
     siteName: 'Imprelapp',
     locale: 'es_CO',

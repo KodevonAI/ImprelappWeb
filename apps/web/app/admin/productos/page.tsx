@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { AdminHeader } from '@/components/admin/header'
-import { serverGet } from '@/lib/server-api'
+import { getAdminProducts, type AdminProductListItem } from '@/lib/data/admin'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -11,29 +11,16 @@ import { cn } from '@/lib/utils'
 import { Plus, Pencil } from 'lucide-react'
 import type { PaginatedResponse } from '@imprelapp/types'
 
-interface ProductRow {
-  id: number
-  name: string
-  slug: string
-  price: string
-  stock: number
-  active: boolean
-  featured: boolean
-  categoryName: string | null
-  createdAt: string
-}
-
 export default async function ProductosPage({
   searchParams,
 }: {
   searchParams: Promise<{ page?: string; search?: string }>
 }) {
   const { page = '1', search = '' } = await searchParams
-  const params = new URLSearchParams({ page, pageSize: '20', ...(search ? { search } : {}) })
 
-  let result: PaginatedResponse<ProductRow> | null = null
+  let result: PaginatedResponse<AdminProductListItem> | null = null
   try {
-    result = await serverGet<PaginatedResponse<ProductRow>>(`/api/products?${params}`)
+    result = await getAdminProducts({ page: Number(page), pageSize: 20, search: search || undefined })
   } catch {}
 
   return (

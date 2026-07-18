@@ -1,11 +1,9 @@
 import { AdminHeader } from '@/components/admin/header'
-import { serverGet } from '@/lib/server-api'
+import { getAdminCategories, getAdminCategoriesFlat, type CategoryWithChildren } from '@/lib/data/admin'
 import { CategoriesClient } from './categories-client'
 import type { Category } from '@imprelapp/types'
 
 export const metadata = { title: 'Categorías' }
-
-type CategoryWithChildren = Category & { children?: CategoryWithChildren[] }
 
 export default async function CategoriasPage() {
   let categories: CategoryWithChildren[] = []
@@ -13,8 +11,8 @@ export default async function CategoriasPage() {
 
   try {
     ;[categories, flatCategories] = await Promise.all([
-      serverGet<CategoryWithChildren[]>('/api/categories'),
-      serverGet<Category[]>('/api/categories/flat'),
+      getAdminCategories(),
+      getAdminCategoriesFlat(),
     ])
   } catch {}
 

@@ -1,52 +1,45 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { PublicLayout } from '@/components/public/public-layout'
-
-export const metadata: Metadata = {
-  title: 'Imprelapp — Rodamientos, Piñones, Correas y Ferretería Industrial',
-  description: 'Ferretería industrial en Colombia. Amplio catálogo de rodamientos, piñones, correas y más. Pide por WhatsApp.',
-  openGraph: { title: 'Imprelapp', description: 'Ferretería industrial en Colombia' },
-}
-import { publicGet } from '@/lib/public-api'
+import { getCategories, getFeaturedProducts } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ArrowRight, MessageCircle, Wrench, Package, Zap } from 'lucide-react'
-import type { Category, PaginatedResponse, Product } from '@imprelapp/types'
+
+export const metadata: Metadata = {
+  title: 'Imprelapp — Herramientas y Ferretería para tu Negocio',
+  description: 'Importadora de herramientas eléctricas, manuales, repuestos automotrices y equipo de carga. Envíos a toda Colombia. Pide por WhatsApp.',
+  openGraph: { title: 'Imprelapp', description: 'Herramientas y ferretería en Colombia' },
+}
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
 
 const defaultCategories = [
-  { name: 'Rodamientos', icon: '⚙️', slug: '' },
-  { name: 'Piñones', icon: '🔩', slug: '' },
-  { name: 'Correas', icon: '📏', slug: '' },
-  { name: 'Ferretería', icon: '🔧', slug: '' },
+  { name: 'Herramientas Eléctricas', icon: '🔌', slug: '' },
+  { name: 'Herramientas Manuales', icon: '🔧', slug: '' },
+  { name: 'Repuestos Automotrices', icon: '⚙️', slug: '' },
+  { name: 'Carretillas y Equipos', icon: '🛠️', slug: '' },
 ]
 
 export default async function HomePage() {
-  let categories: Category[] = []
-  let featuredProducts: Product[] = []
-
-  try {
-    ;[categories, { data: featuredProducts }] = await Promise.all([
-      publicGet<Category[]>('/api/categories'),
-      publicGet<PaginatedResponse<Product>>('/api/products?featured=true&pageSize=8'),
-    ])
-  } catch {}
+  const [categories, featuredProducts] = await Promise.all([
+    getCategories(),
+    getFeaturedProducts(8),
+  ])
 
   const topCategories = categories.filter((c) => !c.parentId).slice(0, 6)
 
   return (
-    <PublicLayout>
+    <>
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary to-blue-900 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-4">
-            Ferretería Industrial<br />
+            Herramientas y Ferretería<br />
             <span className="text-blue-200">para tu negocio</span>
           </h1>
           <p className="text-blue-100 text-lg mb-8">
-            Rodamientos, Piñones, Correas y más. Entregamos en toda Colombia.
+            Taladros, martillos, repuestos automotrices, carretillas y más. Entregamos en toda Colombia.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/productos" className={cn(buttonVariants({ size: 'lg' }), 'bg-white text-primary hover:bg-blue-50 font-semibold')}>
@@ -126,8 +119,8 @@ export default async function HomePage() {
                   <div className="p-3">
                     <p className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">{p.name}</p>
                     <p className="text-primary font-bold text-sm mt-1">{formatCOP(p.price)}</p>
-                    {p.stock <= 5 && p.stock > 0 && (
-                      <p className="text-xs text-orange-500 mt-0.5">Últimas {p.stock} unidades</p>
+                    {!p.inStock && (
+                      <p className="text-xs text-destructive mt-0.5">Sin stock</p>
                     )}
                   </div>
                 </Link>
@@ -150,6 +143,6 @@ export default async function HomePage() {
           <MessageCircle className="size-5 mr-2" /> Chatear por WhatsApp
         </a>
       </section>
-    </PublicLayout>
+    </>
   )
 }
