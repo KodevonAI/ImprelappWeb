@@ -11,6 +11,9 @@ import {
 import { relations } from 'drizzle-orm'
 
 export const messageStatusEnum = pgEnum('message_status', ['new', 'read', 'replied'])
+export const orderStatusEnum = pgEnum('order_status', ['nuevo', 'confirmado', 'enviado', 'entregado', 'cancelado'])
+export const paymentTermEnum = pgEnum('payment_term', ['contado', 'credito_30', 'credito_60', 'credito_90'])
+export const paymentStatusEnum = pgEnum('payment_status', ['pendiente', 'pagado', 'vencido'])
 
 export const admins = pgTable('admins', {
   id: serial('id').primaryKey(),
@@ -68,6 +71,33 @@ export const messages = pgTable('messages', {
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 
+export const orders = pgTable('orders', {
+  id: serial('id').primaryKey(),
+  customerName: text('customer_name').notNull(),
+  customerEmail: text('customer_email').notNull(),
+  customerPhone: text('customer_phone').notNull(),
+  customerAddress: text('customer_address').notNull(),
+  notes: text('notes'),
+  status: orderStatusEnum('status').default('nuevo').notNull(),
+  paymentTerm: paymentTermEnum('payment_term'),
+  paymentStatus: paymentStatusEnum('payment_status').default('pendiente').notNull(),
+  dueDate: timestamp('due_date'),
+  total: numeric('total', { precision: 12, scale: 2 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+export const orderItems = pgTable('order_items', {
+  id: serial('id').primaryKey(),
+  orderId: integer('order_id').notNull().references(() => orders.id, { onDelete: 'cascade' }),
+  productId: integer('product_id').references(() => products.id, { onDelete: 'set null' }),
+  productName: text('product_name').notNull(),
+  productSku: text('product_sku'),
+  unitPrice: numeric('unit_price', { precision: 12, scale: 2 }).notNull(),
+  quantity: integer('quantity').notNull(),
+  subtotal: numeric('subtotal', { precision: 12, scale: 2 }).notNull(),
+})
+
 export const pageViews = pgTable('page_views', {
   id: serial('id').primaryKey(),
   path: text('path').notNull(),
@@ -94,4 +124,13 @@ export const productImagesRelations = relations(productImages, ({ one }) => ({
 
 export const messagesRelations = relations(messages, ({ one }) => ({
   product: one(products, { fields: [messages.productId], references: [products.id] }),
+}))
+
+export const ordersRelations = relations(orders, ({ many }) => ({
+  items: many(orderItems),
+}))
+
+export const orderItemsRelations = relations(orderItems, ({ one }) => ({
+  order: one(orders, { fields: [orderItems.orderId], references: [orders.id] }),
+  product: one(products, { fields: [orderItems.productId], references: [products.id] }),
 }))

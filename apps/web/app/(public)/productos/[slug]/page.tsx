@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { getProductBySlug } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
 import { ContactForm } from '@/components/public/contact-form'
+import { AddToCartButton } from '@/components/public/add-to-cart-button'
 import { Package, MessageCircle, ChevronRight } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -121,12 +122,20 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="space-y-3">
+            {product.inStock && (
+              <AddToCartButton
+                productId={product.id}
+                name={product.name}
+                slug={product.slug}
+                price={product.price}
+              />
+            )}
             <a
               href={`https://wa.me/${WHATSAPP}?text=${whatsappText}`}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(buttonVariants({ size: 'lg' }), 'bg-green-500 hover:bg-green-400 text-white flex-1 justify-center')}
+              className={cn(buttonVariants({ size: 'lg' }), 'bg-green-500 hover:bg-green-400 text-white w-full justify-center')}
             >
               <MessageCircle className="size-5 mr-2" /> Pedir por WhatsApp
             </a>

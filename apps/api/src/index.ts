@@ -9,6 +9,7 @@ import categoriesRouter from './routes/categories.js'
 import productsRouter from './routes/products.js'
 import messagesRouter from './routes/messages.js'
 import dashboardRouter from './routes/dashboard.js'
+import ordersRouter from './routes/orders.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -29,6 +30,7 @@ app.use('/api/categories', categoriesRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/messages', messagesRouter)
 app.use('/api/dashboard', dashboardRouter)
+app.use('/api/orders', ordersRouter)
 
 app.get('/health', (_req, res) => res.json({ ok: true }))
 

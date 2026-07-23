@@ -3,8 +3,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
-import { Search, Menu, X, Phone } from 'lucide-react'
+import { Search, Menu, X, Phone, ShoppingCart } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useCart } from '@/lib/cart-context'
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
 
@@ -14,6 +15,7 @@ interface NavbarProps {
 
 export function Navbar({ categoryLinks = [] }: NavbarProps) {
   const router = useRouter()
+  const { count } = useCart()
   const [menuOpen, setMenuOpen] = useState(false)
   const [search, setSearch] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -68,6 +70,20 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
             />
           </div>
         </form>
+
+        {/* Cart */}
+        <Link
+          href="/carrito"
+          className="relative p-2 rounded-lg hover:bg-muted transition-colors shrink-0"
+          aria-label="Carrito"
+        >
+          <ShoppingCart className="size-5" />
+          {count > 0 && (
+            <span className="absolute -top-1 -right-1 flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold">
+              {count}
+            </span>
+          )}
+        </Link>
 
         {/* Mobile menu toggle */}
         <button

@@ -87,6 +87,38 @@ export interface Message {
   product?: Pick<Product, 'id' | 'name' | 'slug'> | null
 }
 
+export type OrderStatus = 'nuevo' | 'confirmado' | 'enviado' | 'entregado' | 'cancelado'
+export type PaymentTerm = 'contado' | 'credito_30' | 'credito_60' | 'credito_90'
+export type PaymentStatus = 'pendiente' | 'pagado' | 'vencido'
+
+export interface OrderItem {
+  id: number
+  orderId: number
+  productId: number | null
+  productName: string
+  productSku: string | null
+  unitPrice: string
+  quantity: number
+  subtotal: string
+}
+
+export interface Order {
+  id: number
+  customerName: string
+  customerEmail: string
+  customerPhone: string
+  customerAddress: string
+  notes: string | null
+  status: OrderStatus
+  paymentTerm: PaymentTerm | null
+  paymentStatus: PaymentStatus
+  dueDate: string | null
+  total: string
+  createdAt: string
+  updatedAt: string
+  items?: OrderItem[]
+}
+
 export interface Admin {
   id: number
   email: string

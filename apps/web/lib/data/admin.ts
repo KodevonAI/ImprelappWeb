@@ -1,6 +1,6 @@
 import 'server-only'
 import { serverGet } from '@/lib/server-api'
-import type { Product, ProductImage, Category, Message, PaginatedResponse } from '@imprelapp/types'
+import type { Product, ProductImage, Category, Message, Order, PaginatedResponse } from '@imprelapp/types'
 
 export interface AdminProductListItem {
   id: number
@@ -70,4 +70,17 @@ export function getMessages(params: { page?: number; pageSize?: number; status?:
     ...(params.status ? { status: params.status } : {}),
   })
   return serverGet<PaginatedResponse<MessageWithProduct>>(`/api/messages?${qs}`)
+}
+
+export function getAdminOrders(params: { page?: number; pageSize?: number; status?: string } = {}) {
+  const qs = new URLSearchParams({
+    page: String(params.page ?? 1),
+    pageSize: String(params.pageSize ?? 20),
+    ...(params.status ? { status: params.status } : {}),
+  })
+  return serverGet<PaginatedResponse<Order>>(`/api/orders/admin?${qs}`)
+}
+
+export function getAdminOrderById(id: number | string) {
+  return serverGet<Order>(`/api/orders/admin/${id}`)
 }
