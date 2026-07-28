@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
 import { Search, Menu, X, Phone, ShoppingCart } from 'lucide-react'
@@ -48,9 +49,7 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-base">I</span>
-          </div>
+          <Image src="/logo-icon.png" alt="Imprelapp" width={36} height={36} className="h-9 w-9" priority />
           <div className="hidden sm:block">
             <p className="font-bold text-sm leading-tight text-foreground">IMPRELAPP</p>
             <p className="text-xs text-muted-foreground leading-tight">Herramientas y Ferretería</p>
