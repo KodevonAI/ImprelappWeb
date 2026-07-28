@@ -19,6 +19,8 @@ COPY --from=builder /app/packages/types/dist ./packages/types/dist
 COPY --from=builder /app/apps/api/dist ./apps/api/dist
 COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
 COPY --from=builder /app/apps/api/node_modules ./apps/api/node_modules
+COPY --from=builder /app/apps/api/drizzle.config.ts ./apps/api/drizzle.config.ts
+COPY --from=builder /app/apps/api/src ./apps/api/src
 WORKDIR /app/apps/api
 EXPOSE 3001
 CMD ["node", "dist/index.js"]
