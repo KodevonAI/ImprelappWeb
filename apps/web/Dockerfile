@@ -28,4 +28,4 @@ COPY --from=builder /app/apps/web/public ./apps/web/public
 COPY --from=builder /app/apps/web/package.json ./apps/web/package.json
 WORKDIR /app/apps/web
 EXPOSE 3000
-CMD ["node_modules/.bin/next", "start"]
+CMD ["/app/node_modules/.bin/next", "start"]
