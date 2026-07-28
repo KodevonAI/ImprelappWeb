@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useRef } from 'react'
-import { Search, Menu, X, Phone, ShoppingCart } from 'lucide-react'
+import { Search, Menu, X, Phone, ShoppingCart, UserCog } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/lib/cart-context'
 
@@ -44,6 +44,9 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
         >
           WhatsApp
         </a>
+        <Link href="/admin/login" className="flex items-center gap-1 hover:opacity-80">
+          <UserCog className="size-3" /> Admin
+        </Link>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Phone, Mail, MapPin } from 'lucide-react'
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
@@ -9,9 +10,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm">I</span>
-            </div>
+            <Image src="/logo-icon.png" alt="Imprelapp" width={32} height={32} className="h-8 w-8 bg-white rounded-lg p-1" />
             <span className="font-bold text-white">IMPRELAPP</span>
           </div>
           <p className="text-sm text-gray-400">Herramientas, repuestos y equipo para tu negocio. Colombia.</p>
