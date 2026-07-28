@@ -3,6 +3,7 @@ WORKDIR /app
 
 FROM base AS builder
 COPY package*.json ./
+COPY tsconfig.base.json ./
 COPY apps/api/package*.json ./apps/api/
 COPY packages/types/package*.json ./packages/types/
 RUN npm ci --workspace=packages/types --workspace=apps/api

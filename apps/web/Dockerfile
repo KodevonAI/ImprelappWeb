@@ -10,6 +10,7 @@ ENV NEXT_PUBLIC_WHATSAPP=$NEXT_PUBLIC_WHATSAPP
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY package*.json ./
+COPY tsconfig.base.json ./
 COPY apps/web/package*.json ./apps/web/
 COPY packages/types/package*.json ./packages/types/
 RUN npm ci --workspace=packages/types --workspace=apps/web
