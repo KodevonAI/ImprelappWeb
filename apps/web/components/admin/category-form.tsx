@@ -65,7 +65,7 @@ export function CategoryForm({ open, onClose, category, categories, action }: Ca
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="cat-slug">Slug *</Label>
-            <Input id="cat-slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required pattern="[a-z0-9-]+" />
+            <Input id="cat-slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required pattern="[a-z0-9\-]+" />
           </div>
           <div className="space-y-1.5">
             <Label>Categoría padre</Label>

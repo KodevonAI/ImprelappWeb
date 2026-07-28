@@ -87,7 +87,7 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
         {/* Slug */}
         <div className="space-y-1.5">
           <Label htmlFor="slug">Slug *</Label>
-          <Input id="slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required pattern="[a-z0-9-]+" />
+          <Input id="slug" name="slug" value={slug} onChange={(e) => setSlug(e.target.value)} required pattern="[a-z0-9\-]+" />
           <p className="text-xs text-muted-foreground">Solo letras minúsculas, números y guiones</p>
         </div>
 
