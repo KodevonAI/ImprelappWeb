@@ -17,7 +17,7 @@ import type { Product, Category, ProductImage } from '@imprelapp/types'
 interface ProductFormProps {
   product?: Product & { images?: ProductImage[]; category?: Pick<Category, 'id' | 'name' | 'slug'> | null }
   categories: Category[]
-  action: (formData: FormData) => Promise<void>
+  action: (formData: FormData) => Promise<{ id: number }>
 }
 
 export function ProductForm({ product, categories, action }: ProductFormProps) {
@@ -54,12 +54,21 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
     fd.set('active', String(active))
     if (categoryId) fd.set('categoryId', categoryId)
     else fd.delete('categoryId')
-    localImages.forEach((f) => fd.append('images', f))
+    fd.delete('images')
 
     startTransition(async () => {
       try {
-        await action(fd)
+        const { id } = await action(fd)
+
+        for (const file of localImages) {
+          if (file.size === 0) continue
+          const imgFd = new FormData()
+          imgFd.append('image', file)
+          await fetch(`/api/admin/products/${id}/images`, { method: 'POST', body: imgFd })
+        }
+
         toast.success(product ? 'Producto actualizado' : 'Producto creado')
+        router.push('/admin/productos')
       } catch (err) {
         toast.error(err instanceof Error ? err.message : 'Error al guardar')
       }

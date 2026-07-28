@@ -2,17 +2,8 @@
 
 import { revalidatePath } from 'next/cache'
 import { serverPost, serverPut, serverDelete } from '@/lib/server-api'
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
 
-const API_URL = process.env.API_URL ?? 'http://localhost:3001'
-
-async function getToken() {
-  const store = await cookies()
-  return store.get('admin_token')?.value
-}
-
-export async function createProduct(formData: FormData) {
+export async function createProduct(formData: FormData): Promise<{ id: number }> {
   const data = {
     name: String(formData.get('name')),
     slug: String(formData.get('slug')),
@@ -28,31 +19,16 @@ export async function createProduct(formData: FormData) {
 
   const created = await serverPost<{ id: number }>('/api/products', data)
 
-  // Upload images if provided
-  const images = formData.getAll('images') as File[]
   const imageUrl = formData.get('imageUrl') as string
-
   if (imageUrl) {
     await serverPost(`/api/products/${created.id}/images`, { url: imageUrl })
   }
 
-  for (const file of images) {
-    if (file.size === 0) continue
-    const fd = new FormData()
-    fd.append('image', file)
-    const token = await getToken()
-    await fetch(`${API_URL}/api/products/${created.id}/images`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: fd,
-    })
-  }
-
   revalidatePath('/admin/productos')
-  redirect('/admin/productos')
+  return { id: created.id }
 }
 
-export async function updateProduct(id: number, formData: FormData) {
+export async function updateProduct(id: number, formData: FormData): Promise<{ id: number }> {
   const data = {
     name: String(formData.get('name')),
     slug: String(formData.get('slug')),
@@ -68,29 +44,14 @@ export async function updateProduct(id: number, formData: FormData) {
 
   await serverPut(`/api/products/${id}`, data)
 
-  // Upload new images
-  const images = formData.getAll('images') as File[]
   const imageUrl = formData.get('imageUrl') as string
-
   if (imageUrl) {
     await serverPost(`/api/products/${id}/images`, { url: imageUrl })
   }
 
-  for (const file of images) {
-    if (file.size === 0) continue
-    const fd = new FormData()
-    fd.append('image', file)
-    const token = await getToken()
-    await fetch(`${API_URL}/api/products/${id}/images`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${token}` },
-      body: fd,
-    })
-  }
-
   revalidatePath('/admin/productos')
   revalidatePath(`/admin/productos/${id}`)
-  redirect('/admin/productos')
+  return { id }
 }
 
 export async function deleteProduct(id: number) {
