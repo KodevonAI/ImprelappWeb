@@ -7,20 +7,24 @@ import { requireAuth } from '../middleware/auth.js'
 import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
+import sharp from 'sharp'
 
 const router = Router()
 
 const UPLOAD_DIR = process.env.UPLOAD_DIR ?? './uploads'
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true })
 
-const storage = multer.diskStorage({
-  destination: UPLOAD_DIR,
-  filename: (_req, file, cb) => {
-    const unique = `${Date.now()}-${Math.round(Math.random() * 1e9)}`
-    cb(null, `${unique}${path.extname(file.originalname)}`)
-  },
-})
-const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } })
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } })
+
+async function saveCompressedImage(buffer: Buffer): Promise<string> {
+  const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}.webp`
+  await sharp(buffer)
+    .rotate()
+    .resize({ width: 1600, withoutEnlargement: true })
+    .webp({ quality: 80 })
+    .toFile(path.join(UPLOAD_DIR, filename))
+  return filename
+}
 
 const productSchema = z.object({
   name: z.string().min(1),
@@ -229,7 +233,7 @@ router.post('/:id/images', requireAuth, upload.single('image'), async (req: Requ
   }
 
   const url = req.file
-    ? `/uploads/${req.file.filename}`
+    ? `/uploads/${await saveCompressedImage(req.file.buffer)}`
     : req.body.url
 
   const [image] = await db

@@ -1,5 +1,3 @@
-import type { NextConfig } from 'next'
-
 function parseApiOrigin(url: string): { protocol: 'http' | 'https'; hostname: string; port: string } {
   try {
     const u = new URL(url)
@@ -17,11 +15,14 @@ const { protocol, hostname, port } = parseApiOrigin(
   process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 )
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       { protocol, hostname, port, pathname: '/uploads/**' },
     ],
+  },
+  serverActions: {
+    bodySizeLimit: '10mb',
   },
   experimental: {
     serverActions: {
