@@ -21,9 +21,6 @@ const nextConfig = {
       { protocol, hostname, port, pathname: '/uploads/**' },
     ],
   },
-  serverActions: {
-    bodySizeLimit: '10mb',
-  },
   experimental: {
     serverActions: {
       bodySizeLimit: '10mb',
