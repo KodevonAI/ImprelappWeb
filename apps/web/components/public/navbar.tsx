@@ -48,12 +48,8 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
 
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <Image src="/logo-icon.png" alt="Imprelapp" width={36} height={36} className="h-9 w-9" priority />
-          <div className="hidden sm:block">
-            <p className="font-bold text-sm leading-tight text-foreground">IMPRELAPP</p>
-            <p className="text-xs text-muted-foreground leading-tight">Herramientas y Ferretería</p>
-          </div>
+        <Link href="/" className="flex items-center shrink-0">
+          <Image src="/logo-full.png" alt="Imprelapp" width={535} height={306} className="h-12 w-auto" priority />
         </Link>
 
         {/* Search */}
