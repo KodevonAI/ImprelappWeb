@@ -53,8 +53,20 @@ export async function getProducts(
 }
 
 export async function getFeaturedProducts(limit = 8): Promise<ProductListItemPublic[]> {
-  const result = await getProducts({ featured: true, pageSize: limit })
-  return result.data
+  const featured = await getProducts({ featured: true, pageSize: limit })
+  if (featured.data.length > 0) return featured.data
+
+  const fallback = await getProducts({ pageSize: limit * 3 })
+  return shuffle(fallback.data).slice(0, limit)
+}
+
+function shuffle<T>(items: T[]): T[] {
+  const arr = [...items]
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+  }
+  return arr
 }
 
 export async function getProductBySlug(slug: string): Promise<ProductPublic | null> {
