@@ -53,18 +53,20 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
         </Link>
 
         {/* Search */}
-        <form onSubmit={handleSearch} className="flex-1 max-w-xl">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-            <input
-              ref={inputRef}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar taladros, martillos, repuestos..."
-              className="w-full h-10 pl-9 pr-4 rounded-lg border bg-muted/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-background"
-            />
-          </div>
-        </form>
+        <div className="flex-1 flex justify-center">
+          <form onSubmit={handleSearch} className="w-full max-w-xl">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+              <input
+                ref={inputRef}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Buscar taladros, martillos, repuestos..."
+                className="w-full h-10 pl-9 pr-4 rounded-lg border bg-muted/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-background"
+              />
+            </div>
+          </form>
+        </div>
 
         {/* Cart */}
         <Link
