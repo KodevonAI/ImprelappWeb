@@ -1,8 +1,11 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getProducts, getCategoriesFlat } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
 import { Package } from 'lucide-react'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
 export const metadata: Metadata = {
   title: 'Catálogo de Productos',
@@ -83,8 +86,18 @@ export default async function ProductosPage({
                   href={`/productos/${p.slug}`}
                   className="rounded-xl border bg-card hover:shadow-md transition-shadow overflow-hidden group"
                 >
-                  <div className="aspect-square bg-muted flex items-center justify-center">
-                    <Package className="size-10 text-muted-foreground/20" />
+                  <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
+                    {p.image ? (
+                      <Image
+                        src={p.image.startsWith('/') ? `${API_URL}${p.image}` : p.image}
+                        alt={p.name}
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <Package className="size-10 text-muted-foreground/20" />
+                    )}
                   </div>
                   <div className="p-3">
                     <p className="text-xs text-muted-foreground mb-1">{p.categoryName ?? ''}</p>

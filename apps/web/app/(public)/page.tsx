@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getCategories, getFeaturedProducts } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ArrowRight, MessageCircle, Wrench, Package, Zap } from 'lucide-react'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
 export const metadata: Metadata = {
   title: 'Imprelapp — Herramientas y Ferretería para tu Negocio',
@@ -113,8 +116,18 @@ export default async function HomePage() {
                   href={`/productos/${p.slug}`}
                   className="rounded-xl border bg-card hover:shadow-md transition-shadow overflow-hidden group"
                 >
-                  <div className="aspect-square bg-muted flex items-center justify-center">
-                    <Package className="size-12 text-muted-foreground/30" />
+                  <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
+                    {p.image ? (
+                      <Image
+                        src={p.image.startsWith('/') ? `${API_URL}${p.image}` : p.image}
+                        alt={p.name}
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-contain"
+                      />
+                    ) : (
+                      <Package className="size-12 text-muted-foreground/30" />
+                    )}
                   </div>
                   <div className="p-3">
                     <p className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">{p.name}</p>

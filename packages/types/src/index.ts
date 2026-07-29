@@ -57,6 +57,7 @@ export interface ProductListItemPublic {
   categoryId: number | null
   categoryName: string | null
   categorySlug: string | null
+  image: string | null
 }
 
 export interface ProductPublic {

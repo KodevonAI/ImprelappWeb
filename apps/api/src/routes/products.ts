@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express'
 import { z } from 'zod'
 import { db } from '../db/client.js'
 import { products, productImages, categories } from '../db/schema.js'
-import { eq, ilike, and, asc, desc, count, sql } from 'drizzle-orm'
+import { eq, ilike, and, asc, desc, count, sql, inArray } from 'drizzle-orm'
 import { requireAuth } from '../middleware/auth.js'
 import multer from 'multer'
 import path from 'path'
@@ -75,8 +75,24 @@ router.get('/', async (req: Request, res: Response) => {
     .limit(pageSize)
     .offset((page - 1) * pageSize)
 
+  const firstImageByProduct = new Map<number, string>()
+  if (rows.length > 0) {
+    const images = await db
+      .select({ productId: productImages.productId, url: productImages.url, order: productImages.order })
+      .from(productImages)
+      .where(inArray(productImages.productId, rows.map((r) => r.id)))
+      .orderBy(asc(productImages.order))
+    for (const img of images) {
+      if (!firstImageByProduct.has(img.productId)) firstImageByProduct.set(img.productId, img.url)
+    }
+  }
+
   res.json({
-    data: rows.map(({ stock, ...row }) => ({ ...row, inStock: stock > 0 })),
+    data: rows.map(({ stock, ...row }) => ({
+      ...row,
+      inStock: stock > 0,
+      image: firstImageByProduct.get(row.id) ?? null,
+    })),
     total,
     page,
     pageSize,
