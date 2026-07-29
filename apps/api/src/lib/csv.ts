@@ -18,7 +18,7 @@ export function parseCsv(text: string): string[][] {
       } else {
         field += c
       }
-    } else if (c === '"') {
+    } else if (c === '"' && field === '') {
       inQuotes = true
     } else if (c === ',') {
       row.push(field)
