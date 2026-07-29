@@ -19,6 +19,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       { protocol, hostname, port, pathname: '/uploads/**' },
+      { protocol: 'https', hostname: 'api.imprelapp.com', pathname: '/uploads/**' },
     ],
   },
   experimental: {
