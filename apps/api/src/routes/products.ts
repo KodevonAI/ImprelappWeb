@@ -4,6 +4,7 @@ import { db } from '../db/client.js'
 import { products, productImages, categories } from '../db/schema.js'
 import { eq, ilike, and, asc, desc, count, sql, inArray } from 'drizzle-orm'
 import { requireAuth } from '../middleware/auth.js'
+import { parseCsv } from '../lib/csv.js'
 import multer from 'multer'
 import path from 'path'
 import fs from 'fs'
@@ -131,6 +132,122 @@ router.get('/admin', requireAuth, async (req: Request, res: Response) => {
     .offset((page - 1) * pageSize)
 
   res.json({ data: rows, total, page, pageSize, totalPages: Math.ceil(total / pageSize) })
+})
+
+// Admin: downloadable CSV template for bulk import
+router.get('/template', requireAuth, (_req: Request, res: Response) => {
+  const header = 'nombre,slug,descripcion,precio,precio_comparacion,stock,sku,categoria,destacado,activo'
+  const example = 'Taladro Percutor 1/2" 750W,taladro-percutor-750w,Taladro percutor profesional con maletin,189000,220000,15,TLD-750,herramientas-electricas,no,si'
+  const csv = `${header}\n${example}\n`
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8')
+  res.setHeader('Content-Disposition', 'attachment; filename="template-productos.csv"')
+  res.send(csv)
+})
+
+function slugifyName(str: string): string {
+  return str
+    .toLowerCase()
+    .trim()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+function parseCsvBoolean(v: string | undefined, defaultVal: boolean): boolean {
+  if (v === undefined || v.trim() === '') return defaultVal
+  return ['true', '1', 'si', 'sí', 'yes'].includes(v.trim().toLowerCase())
+}
+
+const MONEY_RE = /^\d+(\.\d{1,2})?$/
+
+// Admin: bulk create products from CSV text
+router.post('/bulk-import', requireAuth, async (req: Request, res: Response) => {
+  const csv = String(req.body.csv ?? '')
+  if (!csv.trim()) {
+    res.status(400).json({ error: 'CSV vacío' })
+    return
+  }
+
+  const rows = parseCsv(csv)
+  if (rows.length < 2) {
+    res.status(400).json({ error: 'El CSV no tiene filas de datos' })
+    return
+  }
+
+  const header = rows[0].map((h) => h.trim().toLowerCase())
+  const idx = (col: string) => header.indexOf(col)
+  const iName = idx('nombre')
+  const iSlug = idx('slug')
+  const iDesc = idx('descripcion')
+  const iPrice = idx('precio')
+  const iComparePrice = idx('precio_comparacion')
+  const iStock = idx('stock')
+  const iSku = idx('sku')
+  const iCategory = idx('categoria')
+  const iFeatured = idx('destacado')
+  const iActive = idx('activo')
+
+  if (iName === -1 || iPrice === -1) {
+    res.status(400).json({ error: 'El CSV debe tener columnas "nombre" y "precio"' })
+    return
+  }
+
+  const allCategories = await db
+    .select({ id: categories.id, name: categories.name, slug: categories.slug })
+    .from(categories)
+  const categoryBySlug = new Map(allCategories.map((c) => [c.slug.toLowerCase(), c.id]))
+  const categoryByName = new Map(allCategories.map((c) => [c.name.toLowerCase(), c.id]))
+
+  let created = 0
+  const errors: Array<{ row: number; message: string }> = []
+
+  for (let r = 1; r < rows.length; r++) {
+    const cols = rows[r]
+    if (cols.every((c) => c.trim() === '')) continue
+    const rowNum = r + 1
+
+    const name = cols[iName]?.trim()
+    const priceRaw = cols[iPrice]?.trim()
+
+    if (!name) {
+      errors.push({ row: rowNum, message: 'Falta el nombre' })
+      continue
+    }
+    if (!priceRaw || !MONEY_RE.test(priceRaw)) {
+      errors.push({ row: rowNum, message: `Precio inválido: "${priceRaw ?? ''}"` })
+      continue
+    }
+
+    const slug = (iSlug !== -1 && cols[iSlug]?.trim()) || slugifyName(name)
+    const comparePriceRaw = iComparePrice !== -1 ? cols[iComparePrice]?.trim() : ''
+    const stockRaw = iStock !== -1 ? cols[iStock]?.trim() : ''
+    const categoryRaw = iCategory !== -1 ? cols[iCategory]?.trim().toLowerCase() : ''
+
+    const categoryId = categoryRaw
+      ? categoryBySlug.get(categoryRaw) ?? categoryByName.get(categoryRaw) ?? null
+      : null
+
+    try {
+      await db.insert(products).values({
+        name,
+        slug,
+        description: iDesc !== -1 ? cols[iDesc]?.trim() || null : null,
+        price: priceRaw,
+        comparePrice: comparePriceRaw && MONEY_RE.test(comparePriceRaw) ? comparePriceRaw : null,
+        stock: stockRaw ? Math.max(0, parseInt(stockRaw, 10) || 0) : 0,
+        sku: iSku !== -1 ? cols[iSku]?.trim() || null : null,
+        categoryId,
+        featured: parseCsvBoolean(iFeatured !== -1 ? cols[iFeatured] : undefined, false),
+        active: parseCsvBoolean(iActive !== -1 ? cols[iActive] : undefined, true),
+      })
+      created++
+    } catch {
+      errors.push({ row: rowNum, message: `Ya existe un producto con ese slug o SKU: "${slug}"` })
+    }
+  }
+
+  res.json({ created, errors })
 })
 
 // Admin: single product by numeric id (any status)

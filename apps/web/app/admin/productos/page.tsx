@@ -5,10 +5,11 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { DeleteDialog } from '@/components/admin/delete-dialog'
-import { deleteProduct } from './actions'
+import { BulkImportDialog } from '@/components/admin/bulk-import-dialog'
+import { deleteProduct, bulkImportProducts } from './actions'
 import { formatCOP } from '@/lib/format'
 import { cn } from '@/lib/utils'
-import { Plus, Pencil } from 'lucide-react'
+import { Plus, Pencil, Download } from 'lucide-react'
 import type { PaginatedResponse } from '@imprelapp/types'
 
 export default async function ProductosPage({
@@ -28,9 +29,15 @@ export default async function ProductosPage({
       <AdminHeader
         title="Productos"
         action={
-          <Link href="/admin/productos/nuevo" className={cn(buttonVariants({ size: 'sm' }))}>
-            <Plus className="size-4 mr-1" /> Nuevo
-          </Link>
+          <div className="flex items-center gap-2">
+            <a href="/api/admin/products/template" className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+              <Download className="size-4 mr-1" /> Descargar template
+            </a>
+            <BulkImportDialog action={bulkImportProducts} />
+            <Link href="/admin/productos/nuevo" className={cn(buttonVariants({ size: 'sm' }))}>
+              <Plus className="size-4 mr-1" /> Nuevo
+            </Link>
+          </div>
         }
       />
       <main className="flex-1 overflow-y-auto p-6">

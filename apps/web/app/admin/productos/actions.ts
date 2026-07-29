@@ -63,3 +63,14 @@ export async function deleteProductImage(productId: number, imageId: number) {
   await serverDelete(`/api/products/${productId}/images/${imageId}`)
   revalidatePath(`/admin/productos/${productId}`)
 }
+
+interface BulkImportResult {
+  created: number
+  errors: Array<{ row: number; message: string }>
+}
+
+export async function bulkImportProducts(csv: string): Promise<BulkImportResult> {
+  const result = await serverPost<BulkImportResult>('/api/products/bulk-import', { csv })
+  revalidatePath('/admin/productos')
+  return result
+}
