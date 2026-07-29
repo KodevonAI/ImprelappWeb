@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: { title: 'Imprelapp', description: 'Herramientas y ferretería en Colombia' },
 }
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
 const defaultCategories = [
   { name: 'Herramientas Eléctricas', icon: '🔌', slug: '' },
@@ -52,7 +52,7 @@ export default async function HomePage() {
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola, me interesa conocer sus productos`}
               target="_blank"
               rel="noopener noreferrer"
-              className={cn(buttonVariants({ size: 'lg', variant: 'outline' }), 'border-white text-white hover:bg-white/10')}
+              className={cn(buttonVariants({ size: 'lg', variant: 'outline' }), 'bg-transparent border-white text-white hover:bg-white/10 dark:bg-transparent')}
             >
               <MessageCircle className="size-4 mr-1.5" /> WhatsApp
             </a>

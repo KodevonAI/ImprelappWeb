@@ -1,7 +1,7 @@
 import { ContactForm } from '@/components/public/contact-form'
 import { Mail, MapPin, MessageCircle } from 'lucide-react'
 
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
 export const metadata = {
   title: 'Contáctanos | Imprelapp',

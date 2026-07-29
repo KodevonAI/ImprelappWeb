@@ -8,7 +8,7 @@ import { Search, Menu, X, Phone, ShoppingCart, UserCog } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/lib/cart-context'
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
 interface NavbarProps {
   categoryLinks?: Array<{ name: string; slug: string }>

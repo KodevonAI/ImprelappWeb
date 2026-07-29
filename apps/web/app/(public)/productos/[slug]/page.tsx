@@ -11,7 +11,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP ?? '573000000000'
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
