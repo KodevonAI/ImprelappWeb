@@ -17,11 +17,30 @@ export const metadata: Metadata = {
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
+const categoryIcons: Record<string, string> = {
+  'herramientas-electricas': '🔌',
+  'herramientas-manuales': '🔧',
+  rodamientos: '🛞',
+  cadenas: '⛓️',
+  reductores: '⚙️',
+  'variadores-de-velocidad': '🎚️',
+  rodillos: '🔘',
+  'repuestos-automotrices': '🚗',
+  'carretillas-y-equipos': '🛠️',
+  'ferreteria-en-general': '🔩',
+}
+
 const defaultCategories = [
-  { name: 'Herramientas Eléctricas', icon: '🔌', slug: '' },
-  { name: 'Herramientas Manuales', icon: '🔧', slug: '' },
-  { name: 'Repuestos Automotrices', icon: '⚙️', slug: '' },
-  { name: 'Carretillas y Equipos', icon: '🛠️', slug: '' },
+  { name: 'Herramientas Eléctricas', slug: 'herramientas-electricas' },
+  { name: 'Herramientas Manuales', slug: 'herramientas-manuales' },
+  { name: 'Rodamientos', slug: 'rodamientos' },
+  { name: 'Cadenas', slug: 'cadenas' },
+  { name: 'Reductores', slug: 'reductores' },
+  { name: 'Variadores de Velocidad', slug: 'variadores-de-velocidad' },
+  { name: 'Rodillos', slug: 'rodillos' },
+  { name: 'Repuestos Automotrices', slug: 'repuestos-automotrices' },
+  { name: 'Carretillas y Equipos', slug: 'carretillas-y-equipos' },
+  { name: 'Ferretería en General', slug: 'ferreteria-en-general' },
 ]
 
 export default async function HomePage() {
@@ -31,7 +50,7 @@ export default async function HomePage() {
   ])
   const products = productList.data
 
-  const topCategories = categories.filter((c) => !c.parentId).slice(0, 6)
+  const topCategories = categories.filter((c) => !c.parentId).slice(0, 10)
 
   return (
     <>
@@ -89,14 +108,14 @@ export default async function HomePage() {
           <h2 className="text-xl font-bold">Categorías</h2>
           <Link href="/productos" className="text-sm text-primary hover:underline">Ver todo →</Link>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {(topCategories.length ? topCategories : defaultCategories).map((cat, i) => (
             <Link
               key={cat.slug || i}
               href={cat.slug ? `/categorias/${cat.slug}` : '/productos'}
               className="flex flex-col items-center gap-2 p-4 rounded-xl border bg-card hover:border-primary hover:shadow-sm transition-all text-center"
             >
-              <span className="text-3xl">{'icon' in cat ? (cat as { icon?: string }).icon ?? '📦' : '📦'}</span>
+              <span className="text-3xl">{categoryIcons[cat.slug] ?? '📦'}</span>
               <span className="text-sm font-medium">{cat.name}</span>
             </Link>
           ))}

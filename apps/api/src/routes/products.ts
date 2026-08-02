@@ -35,7 +35,7 @@ const productSchema = z.object({
   comparePrice: z.string().regex(/^\d+(\.\d{1,2})?$/).nullable().optional(),
   stock: z.number().int().min(0).optional(),
   sku: z.string().trim().min(1, 'El SKU es obligatorio'),
-  categoryId: z.number().nullable().optional(),
+  categoryId: z.number().int().positive('La categoría es obligatoria'),
   featured: z.boolean().optional(),
   active: z.boolean().optional(),
 })

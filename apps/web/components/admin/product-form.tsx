@@ -49,11 +49,15 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     const form = e.currentTarget
+    if (!categoryId) {
+      toast.error('Selecciona una categoría')
+      return
+    }
+
     const fd = new FormData(form)
     fd.set('featured', String(featured))
     fd.set('active', String(active))
-    if (categoryId) fd.set('categoryId', categoryId)
-    else fd.delete('categoryId')
+    fd.set('categoryId', categoryId)
     fd.delete('images')
 
     startTransition(async () => {
@@ -118,13 +122,12 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
 
         {/* Categoría */}
         <div className="space-y-1.5">
-          <Label>Categoría</Label>
+          <Label>Categoría *</Label>
           <Select value={categoryId} onValueChange={(v) => setCategoryId(v ?? '')}>
             <SelectTrigger>
-              <SelectValue placeholder="Sin categoría" />
+              <SelectValue placeholder="Selecciona una categoría" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Sin categoría</SelectItem>
               {categories.map((cat) => (
                 <SelectItem key={cat.id} value={String(cat.id)}>
                   {cat.name}
