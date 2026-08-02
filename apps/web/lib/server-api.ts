@@ -59,11 +59,18 @@ export async function serverPatch<T>(path: string, body: unknown): Promise<T> {
   return res.json()
 }
 
-export async function serverDelete(path: string): Promise<void> {
+export async function serverDelete(path: string, body?: unknown): Promise<void> {
   const token = await getToken()
   const res = await fetch(`${API_URL}${path}`, {
     method: 'DELETE',
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...(body ? { 'Content-Type': 'application/json' } : {}),
+    },
+    ...(body ? { body: JSON.stringify(body) } : {}),
   })
-  if (!res.ok && res.status !== 204) throw new Error(`API error ${res.status}`)
+  if (!res.ok && res.status !== 204) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error((err as { error?: string }).error ?? `API error ${res.status}`)
+  }
 }

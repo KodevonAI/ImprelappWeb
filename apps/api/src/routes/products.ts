@@ -369,6 +369,20 @@ router.put('/:id', requireAuth, async (req: Request, res: Response) => {
   }
 })
 
+// Admin: bulk delete products
+const bulkDeleteSchema = z.object({ ids: z.array(z.number().int().positive()).min(1) })
+
+router.delete('/', requireAuth, async (req: Request, res: Response) => {
+  const parsed = bulkDeleteSchema.safeParse(req.body)
+  if (!parsed.success) {
+    res.status(400).json({ error: 'IDs inválidos' })
+    return
+  }
+
+  await db.delete(products).where(inArray(products.id, parsed.data.ids))
+  res.status(204).send()
+})
+
 // Admin: delete product
 router.delete('/:id', requireAuth, async (req: Request, res: Response) => {
   const id = Number(req.params.id)

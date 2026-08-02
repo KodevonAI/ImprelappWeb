@@ -59,6 +59,11 @@ export async function deleteProduct(id: number) {
   revalidatePath('/admin/productos')
 }
 
+export async function bulkDeleteProducts(ids: number[]) {
+  await serverDelete('/api/products', { ids })
+  revalidatePath('/admin/productos')
+}
+
 export async function deleteProductImage(productId: number, imageId: number) {
   await serverDelete(`/api/products/${productId}/images/${imageId}`)
   revalidatePath(`/admin/productos/${productId}`)

@@ -123,7 +123,7 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
         {/* Categoría */}
         <div className="space-y-1.5">
           <Label>Categoría *</Label>
-          <Select value={categoryId} onValueChange={(v) => setCategoryId(v ?? '')}>
+          <Select value={categoryId} onValueChange={(v) => setCategoryId(v ?? '')} disabled={categories.length === 0}>
             <SelectTrigger>
               <SelectValue placeholder="Selecciona una categoría" />
             </SelectTrigger>
@@ -135,6 +135,11 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
               ))}
             </SelectContent>
           </Select>
+          {categories.length === 0 && (
+            <p className="text-xs text-destructive">
+              No hay categorías creadas. <a href="/admin/categorias" className="underline">Crea una primero</a>.
+            </p>
+          )}
         </div>
 
         {/* Flags */}
