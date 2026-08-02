@@ -34,7 +34,7 @@ const productSchema = z.object({
   price: z.string().regex(/^\d+(\.\d{1,2})?$/),
   comparePrice: z.string().regex(/^\d+(\.\d{1,2})?$/).nullable().optional(),
   stock: z.number().int().min(0).optional(),
-  sku: z.string().nullable().optional(),
+  sku: z.string().trim().min(1, 'El SKU es obligatorio'),
   categoryId: z.number().nullable().optional(),
   featured: z.boolean().optional(),
   active: z.boolean().optional(),
@@ -315,6 +315,14 @@ router.get('/:slug', async (req: Request, res: Response) => {
   res.json({ ...publicProduct, inStock: stock > 0, images, category: category ?? null })
 })
 
+function duplicateFieldMessage(err: unknown): string | null {
+  const constraint = (err as { constraint?: string })?.constraint ?? ''
+  if ((err as { code?: string })?.code !== '23505') return null
+  if (constraint.includes('sku')) return 'Ya existe un producto con ese SKU'
+  if (constraint.includes('slug')) return 'Ya existe un producto con ese slug'
+  return 'Ya existe un producto con ese valor único'
+}
+
 // Admin: create product
 router.post('/', requireAuth, async (req: Request, res: Response) => {
   const parsed = productSchema.safeParse(req.body)
@@ -323,8 +331,14 @@ router.post('/', requireAuth, async (req: Request, res: Response) => {
     return
   }
 
-  const [created] = await db.insert(products).values(parsed.data).returning()
-  res.status(201).json(created)
+  try {
+    const [created] = await db.insert(products).values(parsed.data).returning()
+    res.status(201).json(created)
+  } catch (err) {
+    const message = duplicateFieldMessage(err)
+    if (!message) throw err
+    res.status(409).json({ error: message })
+  }
 })
 
 // Admin: update product
@@ -336,17 +350,23 @@ router.put('/:id', requireAuth, async (req: Request, res: Response) => {
     return
   }
 
-  const [updated] = await db
-    .update(products)
-    .set({ ...parsed.data, updatedAt: new Date() })
-    .where(eq(products.id, id))
-    .returning()
+  try {
+    const [updated] = await db
+      .update(products)
+      .set({ ...parsed.data, updatedAt: new Date() })
+      .where(eq(products.id, id))
+      .returning()
 
-  if (!updated) {
-    res.status(404).json({ error: 'Producto no encontrado' })
-    return
+    if (!updated) {
+      res.status(404).json({ error: 'Producto no encontrado' })
+      return
+    }
+    res.json(updated)
+  } catch (err) {
+    const message = duplicateFieldMessage(err)
+    if (!message) throw err
+    res.status(409).json({ error: message })
   }
-  res.json(updated)
 })
 
 // Admin: delete product

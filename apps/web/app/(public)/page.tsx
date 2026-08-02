@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import { getCategories, getFeaturedProducts } from '@/lib/data/public'
+import { getCategories, getProducts } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
@@ -11,8 +11,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
 export const metadata: Metadata = {
   title: 'Imprelapp — Herramientas y Ferretería para tu Negocio',
-  description: 'Importadora de herramientas eléctricas, manuales, repuestos automotrices y equipo de carga. Envíos a toda Colombia. Pide por WhatsApp.',
-  openGraph: { title: 'Imprelapp', description: 'Herramientas y ferretería en Colombia' },
+  description: 'Importadora de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad, rodillos, repuestos automotrices, equipo de carga y ferretería en general. Envíos a toda Colombia. Pide por WhatsApp.',
+  openGraph: { title: 'Imprelapp', description: 'Herramientas, rodamientos, cadenas, reductores, variadores de velocidad y ferretería en general en Colombia' },
 }
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
@@ -25,10 +25,11 @@ const defaultCategories = [
 ]
 
 export default async function HomePage() {
-  const [categories, featuredProducts] = await Promise.all([
+  const [categories, productList] = await Promise.all([
     getCategories(),
-    getFeaturedProducts(8),
+    getProducts({ pageSize: 24 }),
   ])
+  const products = productList.data
 
   const topCategories = categories.filter((c) => !c.parentId).slice(0, 6)
 
@@ -42,11 +43,12 @@ export default async function HomePage() {
             <span className="text-blue-200">para tu negocio</span>
           </h1>
           <p className="text-blue-100 text-lg mb-8">
-            Taladros, martillos, repuestos automotrices, carretillas y más. Entregamos en toda Colombia.
+            Herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad,
+            rodillos, repuestos automotrices, carretillas y ferretería en general. Entregamos en toda Colombia.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/productos" className={cn(buttonVariants({ size: 'lg' }), 'bg-white text-primary hover:bg-blue-50 font-semibold')}>
-              Ver catálogo <ArrowRight className="size-4 ml-1" />
+            <Link href="#categorias" className={cn(buttonVariants({ size: 'lg' }), 'bg-white text-primary hover:bg-blue-50 font-semibold')}>
+              Ver catálogo completo <ArrowRight className="size-4 ml-1" />
             </Link>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola, me interesa conocer sus productos`}
@@ -82,7 +84,7 @@ export default async function HomePage() {
       </section>
 
       {/* Categories */}
-      <section className="max-w-7xl mx-auto px-4 py-12">
+      <section id="categorias" className="max-w-7xl mx-auto px-4 py-12 scroll-mt-4">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl font-bold">Categorías</h2>
           <Link href="/productos" className="text-sm text-primary hover:underline">Ver todo →</Link>
@@ -101,16 +103,16 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Featured products */}
-      {featuredProducts.length > 0 && (
+      {/* Product listing */}
+      {products.length > 0 && (
         <section className="bg-muted/30 py-12">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold">Productos destacados</h2>
-              <Link href="/productos" className="text-sm text-primary hover:underline">Ver catálogo →</Link>
+              <h2 className="text-xl font-bold">Nuestros productos</h2>
+              <Link href="/productos" className="text-sm text-primary hover:underline">Ver catálogo completo →</Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {featuredProducts.map((p) => (
+              {products.map((p) => (
                 <Link
                   key={p.id}
                   href={`/productos/${p.slug}`}

@@ -9,7 +9,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
 
 export const metadata: Metadata = {
   title: 'Catálogo de Productos',
-  description: 'Explora nuestro catálogo de herramientas eléctricas, manuales, repuestos automotrices y equipo de carga. Precios en COP, envíos a toda Colombia.',
+  description: 'Explora nuestro catálogo de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad, rodillos, repuestos automotrices, equipo de carga y ferretería en general. Precios en COP, envíos a toda Colombia.',
 }
 
 export default async function ProductosPage({

@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     default: 'Imprelapp — Herramientas y Ferretería para tu Negocio',
     template: '%s | Imprelapp',
   },
-  description: 'Imprelapp: importadora de herramientas eléctricas, manuales, repuestos automotrices y equipo de carga. Envíos a toda Colombia.',
-  keywords: ['herramientas', 'ferretería', 'taladros', 'repuestos automotrices', 'carretillas', 'Colombia'],
+  description: 'Imprelapp: importadora de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad, rodillos, repuestos automotrices, equipo de carga y ferretería en general. Envíos a toda Colombia.',
+  keywords: ['herramientas', 'ferretería', 'taladros', 'rodamientos', 'cadenas', 'reductores', 'variadores de velocidad', 'rodillos', 'repuestos automotrices', 'carretillas', 'Colombia'],
   openGraph: {
     siteName: 'Imprelapp',
     locale: 'es_CO',

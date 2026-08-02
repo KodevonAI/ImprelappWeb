@@ -111,8 +111,9 @@ export function ProductForm({ product, categories, action }: ProductFormProps) {
 
         {/* SKU */}
         <div className="space-y-1.5">
-          <Label htmlFor="sku">SKU</Label>
-          <Input id="sku" name="sku" defaultValue={product?.sku ?? ''} />
+          <Label htmlFor="sku">SKU (ID único) *</Label>
+          <Input id="sku" name="sku" defaultValue={product?.sku ?? ''} required />
+          <p className="text-xs text-muted-foreground">Identificador único del producto, evita duplicados</p>
         </div>
 
         {/* Categoría */}
