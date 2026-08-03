@@ -37,6 +37,7 @@ function CategoryRow({
       >
         <div className="flex items-center gap-2">
           {depth > 0 && <ChevronRight className="size-3.5 text-muted-foreground shrink-0" />}
+          <Badge variant="secondary" className="text-xs font-mono">#{cat.id}</Badge>
           <span className="text-sm font-medium">{cat.name}</span>
           <span className="text-xs text-muted-foreground">/{cat.slug}</span>
           {!cat.active && <Badge variant="outline" className="text-xs">Inactiva</Badge>}
