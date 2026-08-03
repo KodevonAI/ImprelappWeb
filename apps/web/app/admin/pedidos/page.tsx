@@ -7,6 +7,7 @@ import { formatCOP } from '@/lib/format'
 import { formatDistanceToNow } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
 import type { Order, OrderStatus, PaymentStatus, PaginatedResponse } from '@imprelapp/types'
 
 const statusConfig: Record<OrderStatus, { label: string; variant: 'default' | 'secondary' | 'outline' | 'destructive' }> = {
@@ -48,7 +49,14 @@ export default async function PedidosPage({
 
   return (
     <>
-      <AdminHeader title="Pedidos" />
+      <AdminHeader
+        title="Pedidos"
+        action={
+          <Link href="/admin/pedidos/nuevo" className={cn(buttonVariants({ size: 'sm' }))}>
+            <Plus className="size-4 mr-1" /> Nuevo pedido
+          </Link>
+        }
+      />
       <main className="flex-1 overflow-y-auto p-6">
         <div className="rounded-xl border bg-card overflow-hidden">
           <div className="px-4 py-3 border-b flex gap-2">

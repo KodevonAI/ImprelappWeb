@@ -1,14 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 export default function AdminLoginPage() {
-  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -30,20 +28,29 @@ export default function AdminLoginPage() {
 
       if (!res.ok) {
         setError(data.error ?? 'Error al iniciar sesión')
+        setLoading(false)
         return
       }
 
       // Store token in cookie via API route
-      await fetch('/api/auth/set-cookie', {
+      const cookieRes = await fetch('/api/auth/set-cookie', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token: data.token }),
       })
 
-      router.push('/admin/dashboard')
+      if (!cookieRes.ok) {
+        setError('No se pudo iniciar sesión, intenta de nuevo')
+        setLoading(false)
+        return
+      }
+
+      // Hard navigation: guarantees the cookie is sent on the very next
+      // request, so proxy.ts sees it. router.push() can race the cookie
+      // write via the client router cache and bounce back to login.
+      window.location.href = '/admin/dashboard'
     } catch {
       setError('Error de conexión')
-    } finally {
       setLoading(false)
     }
   }
