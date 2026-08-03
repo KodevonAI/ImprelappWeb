@@ -11,7 +11,10 @@ export async function serverGet<T>(path: string): Promise<T> {
   const token = await getToken()
   const res = await fetch(`${API_URL}${path}`, {
     headers: { Authorization: `Bearer ${token}` },
-    cache: 'no-store',
+    // Cached for up to 30s and invalidated instantly by revalidatePath()
+    // after any admin mutation — avoids a live DB round-trip on every
+    // navigation while staying correct after writes.
+    next: { revalidate: 30 },
   })
   if (!res.ok) throw new Error(`API error ${res.status}`)
   return res.json()

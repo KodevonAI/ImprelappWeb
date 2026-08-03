@@ -7,6 +7,7 @@ import {
   boolean,
   timestamp,
   pgEnum,
+  index,
 } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
 
@@ -33,7 +34,10 @@ export const categories = pgTable('categories', {
   order: integer('order').default(0).notNull(),
   active: boolean('active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-})
+}, (table) => [
+  index('categories_parent_id_idx').on(table.parentId),
+  index('categories_active_idx').on(table.active),
+])
 
 export const products = pgTable('products', {
   id: serial('id').primaryKey(),
@@ -49,7 +53,11 @@ export const products = pgTable('products', {
   active: boolean('active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-})
+}, (table) => [
+  index('products_category_id_idx').on(table.categoryId),
+  index('products_active_idx').on(table.active),
+  index('products_created_at_idx').on(table.createdAt),
+])
 
 export const productImages = pgTable('product_images', {
   id: serial('id').primaryKey(),
@@ -57,7 +65,9 @@ export const productImages = pgTable('product_images', {
   url: text('url').notNull(),
   alt: text('alt'),
   order: integer('order').default(0).notNull(),
-})
+}, (table) => [
+  index('product_images_product_id_idx').on(table.productId),
+])
 
 export const messages = pgTable('messages', {
   id: serial('id').primaryKey(),
@@ -69,7 +79,10 @@ export const messages = pgTable('messages', {
   productId: integer('product_id').references(() => products.id, { onDelete: 'set null' }),
   status: messageStatusEnum('status').default('new').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-})
+}, (table) => [
+  index('messages_status_idx').on(table.status),
+  index('messages_created_at_idx').on(table.createdAt),
+])
 
 export const orders = pgTable('orders', {
   id: serial('id').primaryKey(),
@@ -85,7 +98,11 @@ export const orders = pgTable('orders', {
   total: numeric('total', { precision: 12, scale: 2 }).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-})
+}, (table) => [
+  index('orders_status_idx').on(table.status),
+  index('orders_created_at_idx').on(table.createdAt),
+  index('orders_due_date_idx').on(table.dueDate),
+])
 
 export const orderItems = pgTable('order_items', {
   id: serial('id').primaryKey(),
@@ -96,7 +113,9 @@ export const orderItems = pgTable('order_items', {
   unitPrice: numeric('unit_price', { precision: 12, scale: 2 }).notNull(),
   quantity: integer('quantity').notNull(),
   subtotal: numeric('subtotal', { precision: 12, scale: 2 }).notNull(),
-})
+}, (table) => [
+  index('order_items_order_id_idx').on(table.orderId),
+])
 
 export const pageViews = pgTable('page_views', {
   id: serial('id').primaryKey(),
