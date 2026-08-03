@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { AdminSidebar } from '@/components/admin/sidebar'
+import { AdminChrome } from '@/components/admin/admin-chrome'
 import { Toaster } from '@/components/ui/sonner'
 
 export const metadata: Metadata = {
@@ -8,12 +8,9 @@ export const metadata: Metadata = {
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen overflow-hidden bg-muted/20">
-      <AdminSidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        {children}
-      </div>
+    <>
+      <AdminChrome>{children}</AdminChrome>
       <Toaster richColors position="top-right" />
-    </div>
+    </>
   )
 }
