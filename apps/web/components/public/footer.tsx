@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Phone, Mail, MapPin } from 'lucide-react'
+import { WHATSAPP_NUMBER } from '@/lib/seo'
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
+interface FooterProps {
+  categoryLinks?: Array<{ name: string; slug: string }>
+}
 
-export function Footer() {
+export function Footer({ categoryLinks = [] }: FooterProps) {
   return (
     <footer className="bg-gray-900 text-gray-300 mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -13,16 +16,21 @@ export function Footer() {
             <Image src="/logo-icon.png" alt="Imprelapp" width={32} height={32} className="h-8 w-8 bg-white rounded-lg p-1" />
             <span className="font-bold text-white">IMPRELAPP</span>
           </div>
-          <p className="text-sm text-gray-400">Herramientas, repuestos y equipo para tu negocio. Colombia.</p>
+          <p className="text-sm text-gray-400">
+            Importadora de herramientas, rodamientos, cadenas, reductores, repuestos y ferretería en general. Envíos a toda Colombia.
+          </p>
         </div>
         <div>
           <p className="font-semibold text-white mb-3 text-sm">Categorías</p>
           <ul className="space-y-1.5 text-sm">
-            {['Herramientas Eléctricas', 'Herramientas Manuales', 'Repuestos Automotrices', 'Carretillas y Equipos'].map((cat) => (
-              <li key={cat}>
-                <Link href={`/productos?search=${cat.toLowerCase()}`} className="hover:text-white transition-colors">{cat}</Link>
+            {categoryLinks.map((cat) => (
+              <li key={cat.slug}>
+                <Link href={`/categorias/${cat.slug}`} className="hover:text-white transition-colors">{cat.name}</Link>
               </li>
             ))}
+            <li>
+              <Link href="/productos" className="hover:text-white transition-colors">Ver todo el catálogo</Link>
+            </li>
           </ul>
         </div>
         <div>

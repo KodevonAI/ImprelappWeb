@@ -6,16 +6,47 @@ import { formatCOP } from '@/lib/format'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { ArrowRight, MessageCircle, Wrench, Package, Zap } from 'lucide-react'
+import { JsonLd, WHATSAPP_NUMBER, imageUrl, pageMetadata } from '@/lib/seo'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
+export const metadata: Metadata = pageMetadata({
+  title: 'Imprelapp | Herramientas, Rodamientos y Ferretería en Colombia',
+  absoluteTitle: true,
+  description: 'Importadora de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores y ferretería. Envíos a toda Colombia. Pide por WhatsApp.',
+  path: '/',
+})
 
-export const metadata: Metadata = {
-  title: 'Imprelapp — Herramientas y Ferretería para tu Negocio',
-  description: 'Importadora de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad, rodillos, repuestos automotrices, equipo de carga y ferretería en general. Envíos a toda Colombia. Pide por WhatsApp.',
-  openGraph: { title: 'Imprelapp', description: 'Herramientas, rodamientos, cadenas, reductores, variadores de velocidad y ferretería en general en Colombia' },
+const faqs = [
+  {
+    q: '¿Qué productos vende Imprelapp?',
+    a: 'Imprelapp es una importadora de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad, rodillos, repuestos automotrices, carretillas y equipos de carga, y ferretería en general para talleres, industrias y negocios.',
+  },
+  {
+    q: '¿Hacen envíos a toda Colombia?',
+    a: 'Sí. Despachamos pedidos a todo el territorio colombiano. Los precios del catálogo están en pesos colombianos (COP).',
+  },
+  {
+    q: '¿Cómo hago un pedido?',
+    a: 'Agrega los productos al carrito y confirma el pedido con tus datos de contacto y entrega, o escríbenos directamente por WhatsApp. Te contactamos para confirmar disponibilidad y detalles del envío.',
+  },
+  {
+    q: '¿Ofrecen asesoría técnica para elegir un producto?',
+    a: 'Sí. Si no sabes qué referencia de rodamiento, cadena, reductor o herramienta necesitas, escríbenos por WhatsApp o por el formulario de contacto y te ayudamos a elegir.',
+  },
+  {
+    q: '¿Qué hago si no encuentro un producto en el catálogo?',
+    a: 'Contáctanos por WhatsApp con la referencia o una foto del repuesto. Te ayudamos a conseguirlo aunque no aparezca publicado en la tienda.',
+  },
+]
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
 }
-
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
 const categoryIcons: Record<string, string> = {
   'herramientas-electricas': '🔌',
@@ -54,6 +85,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={faqJsonLd} />
       {/* Hero */}
       <section className="bg-gradient-to-br from-primary to-blue-900 text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -115,7 +147,7 @@ export default async function HomePage() {
               href={cat.slug ? `/categorias/${cat.slug}` : '/productos'}
               className="flex flex-col items-center gap-2 p-4 rounded-xl border bg-card hover:border-primary hover:shadow-sm transition-all text-center"
             >
-              <span className="text-3xl">{categoryIcons[cat.slug] ?? '📦'}</span>
+              <span className="text-3xl" aria-hidden="true">{categoryIcons[cat.slug] ?? '📦'}</span>
               <span className="text-sm font-medium">{cat.name}</span>
             </Link>
           ))}
@@ -140,7 +172,7 @@ export default async function HomePage() {
                   <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
                     {p.image ? (
                       <Image
-                        src={p.image.startsWith('/') ? `${API_URL}${p.image}` : p.image}
+                        src={imageUrl(p.image)}
                         alt={p.name}
                         width={300}
                         height={300}
@@ -163,6 +195,22 @@ export default async function HomePage() {
           </div>
         </section>
       )}
+
+      {/* FAQ */}
+      <section className="max-w-3xl mx-auto px-4 py-12">
+        <h2 className="text-xl font-bold mb-6">Preguntas frecuentes</h2>
+        <div className="divide-y rounded-xl border bg-card">
+          {faqs.map(({ q, a }) => (
+            <details key={q} className="group p-4">
+              <summary className="cursor-pointer list-none font-medium text-sm flex items-center justify-between gap-3">
+                {q}
+                <span className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
 
       {/* WhatsApp CTA */}
       <section className="bg-primary text-white py-14 px-4 text-center">

@@ -9,19 +9,39 @@ import { AddToCartButton } from '@/components/public/add-to-cart-button'
 import { Package, MessageCircle, ChevronRight } from 'lucide-react'
 import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import type { ProductPublic } from '@imprelapp/types'
+import {
+  JsonLd,
+  SITE_URL,
+  WHATSAPP_NUMBER as WHATSAPP,
+  breadcrumbJsonLd,
+  imageUrl,
+  pageMetadata,
+  truncate,
+} from '@/lib/seo'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
+function productDescription(p: ProductPublic, name: string): string {
+  if (p.description?.trim()) return truncate(p.description)
+  const parts = [
+    `${name}${p.category ? ` (${p.category.name})` : ''} a ${formatCOP(p.price)}.`,
+    p.sku ? `Ref. ${p.sku}.` : '',
+    p.inStock ? 'Disponible para envío a toda Colombia.' : 'Consulta disponibilidad.',
+    'Pide en línea o por WhatsApp.',
+  ]
+  return truncate(parts.filter(Boolean).join(' '))
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const p = await getProductBySlug(slug)
-  if (!p) return { title: 'Producto' }
-  return {
-    title: p.name,
-    description: p.description ?? `${p.name} — disponible en Imprelapp`,
-    openGraph: { title: p.name, description: p.description ?? undefined },
-  }
+  if (!p) return { title: 'Producto no encontrado', robots: { index: false } }
+  const name = p.name.trim()
+  return pageMetadata({
+    title: name,
+    description: productDescription(p, name),
+    path: `/productos/${p.slug}`,
+    images: (p.images ?? []).slice(0, 4).map((img) => ({ url: imageUrl(img.url), alt: img.alt ?? name })),
+  })
 }
 
 export default async function ProductoPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -29,8 +49,37 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
   const product = await getProductBySlug(slug)
   if (!product) notFound()
 
+  const name = product.name.trim()
+  const productUrl = `${SITE_URL}/productos/${product.slug}`
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    url: productUrl,
+    description: productDescription(product, name),
+    ...(product.sku ? { sku: product.sku, mpn: product.sku } : {}),
+    ...(product.images?.length ? { image: product.images.map((img) => imageUrl(img.url)) } : {}),
+    ...(product.category ? { category: product.category.name } : {}),
+    offers: {
+      '@type': 'Offer',
+      url: productUrl,
+      price: Number(product.price).toFixed(0),
+      priceCurrency: 'COP',
+      availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      itemCondition: 'https://schema.org/NewCondition',
+      seller: { '@id': `${SITE_URL}/#organization` },
+      areaServed: 'CO',
+    },
+  }
+  const crumbs = [
+    { name: 'Inicio', path: '/' },
+    { name: 'Productos', path: '/productos' },
+    ...(product.category ? [{ name: product.category.name, path: `/categorias/${product.category.slug}` }] : []),
+    { name, path: `/productos/${product.slug}` },
+  ]
+
   const whatsappText = encodeURIComponent(
-    `Hola, estoy interesado en el producto: *${product.name}* (${formatCOP(product.price)}). ¿Tienen disponibilidad?`
+    `Hola, estoy interesado en el producto: *${name}* (${formatCOP(product.price)}). ¿Tienen disponibilidad?`
   )
 
   const images = product.images ?? []
@@ -38,8 +87,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
+      <JsonLd data={[productJsonLd, breadcrumbJsonLd(crumbs)]} />
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6">
+      <nav aria-label="Migas de pan" className="flex items-center gap-1.5 text-sm text-muted-foreground mb-6">
         <Link href="/" className="hover:text-foreground">Inicio</Link>
         <ChevronRight className="size-3.5" />
         <Link href="/productos" className="hover:text-foreground">Productos</Link>
@@ -52,7 +102,7 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
           </>
         )}
         <ChevronRight className="size-3.5" />
-        <span className="text-foreground truncate max-w-xs">{product.name}</span>
+        <span className="text-foreground truncate max-w-xs">{name}</span>
       </nav>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -61,8 +111,8 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
           <div className="aspect-square rounded-2xl border bg-muted overflow-hidden">
             {firstImage ? (
               <Image
-                src={firstImage.url.startsWith('/') ? `${API_URL}${firstImage.url}` : firstImage.url}
-                alt={firstImage.alt ?? product.name}
+                src={imageUrl(firstImage.url)}
+                alt={firstImage.alt || name}
                 width={600}
                 height={600}
                 className="w-full h-full object-contain"
@@ -75,11 +125,11 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
           </div>
           {images.length > 1 && (
             <div className="flex gap-2 overflow-x-auto pb-1">
-              {images.map((img) => (
+              {images.map((img, i) => (
                 <div key={img.id} className="h-16 w-16 shrink-0 rounded-lg border overflow-hidden bg-muted">
                   <Image
-                    src={img.url.startsWith('/') ? `${API_URL}${img.url}` : img.url}
-                    alt={img.alt ?? ''}
+                    src={imageUrl(img.url)}
+                    alt={img.alt || `${name} - imagen ${i + 1}`}
                     width={64}
                     height={64}
                     className="w-full h-full object-cover"
@@ -97,7 +147,7 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
               {product.category.name}
             </Link>
           )}
-          <h1 className="text-2xl sm:text-3xl font-bold">{product.name}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold">{name}</h1>
 
           {product.sku && (
             <p className="text-sm text-muted-foreground">Ref: {product.sku}</p>
@@ -126,7 +176,7 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
             {product.inStock && (
               <AddToCartButton
                 productId={product.id}
-                name={product.name}
+                name={name}
                 slug={product.slug}
                 price={product.price}
               />
@@ -153,7 +203,7 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
       {/* Contact form */}
       <div className="mt-14 max-w-lg">
         <h2 className="text-xl font-bold mb-6">¿Preguntas sobre este producto?</h2>
-        <ContactForm productId={product.id} productName={product.name} />
+        <ContactForm productId={product.id} productName={name} />
       </div>
     </div>
   )

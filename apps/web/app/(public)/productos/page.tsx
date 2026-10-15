@@ -4,19 +4,33 @@ import Image from 'next/image'
 import { getProducts, getCategoriesFlat } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
 import { Package } from 'lucide-react'
+import { imageUrl, pageMetadata } from '@/lib/seo'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
-
-export const metadata: Metadata = {
-  title: 'Catálogo de Productos',
-  description: 'Explora nuestro catálogo de herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad, rodillos, repuestos automotrices, equipo de carga y ferretería en general. Precios en COP, envíos a toda Colombia.',
+type Props = {
+  searchParams: Promise<{ search?: string; categoryId?: string; page?: string }>
 }
 
-export default async function ProductosPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ search?: string; categoryId?: string; page?: string }>
-}) {
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const { search = '', categoryId = '', page = '1' } = await searchParams
+  const pageNum = Math.max(1, Number(page) || 1)
+  const base = pageMetadata({
+    title: `Catálogo de Herramientas y Ferretería${pageNum > 1 ? ` (página ${pageNum})` : ''}`,
+    description: 'Herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores, rodillos, repuestos y ferretería. Precios en COP y envíos a toda Colombia.',
+    path: pageNum > 1 ? `/productos?page=${pageNum}` : '/productos',
+    // Search results are thin/duplicate pages; keep them out of the index but let crawlers follow links.
+    noindex: Boolean(search),
+  })
+  if (categoryId) {
+    const cat = (await getCategoriesFlat()).find((c) => String(c.id) === categoryId)
+    if (cat) {
+      base.alternates = { canonical: `/categorias/${cat.slug}` }
+      base.openGraph = { ...base.openGraph, url: `/categorias/${cat.slug}` }
+    }
+  }
+  return base
+}
+
+export default async function ProductosPage({ searchParams }: Props) {
   const { search = '', categoryId = '', page = '1' } = await searchParams
 
   const [result, categories] = await Promise.all([
@@ -35,7 +49,7 @@ export default async function ProductosPage({
         {/* Sidebar filters */}
         <aside className="w-full sm:w-56 shrink-0">
           <div className="rounded-xl border bg-card p-4">
-            <p className="font-semibold text-sm mb-3">Categorías</p>
+            <h2 className="font-semibold text-sm mb-3">Categorías</h2>
             <ul className="space-y-1">
               <li>
                 <Link
@@ -48,7 +62,7 @@ export default async function ProductosPage({
               {categories.filter((c) => !c.parentId).map((cat) => (
                 <li key={cat.id}>
                   <Link
-                    href={`/productos?categoryId=${cat.id}${search ? `&search=${search}` : ''}`}
+                    href={search ? `/productos?categoryId=${cat.id}&search=${encodeURIComponent(search)}` : `/categorias/${cat.slug}`}
                     className={`block px-2 py-1.5 rounded-lg text-sm transition-colors ${categoryId === String(cat.id) ? 'bg-primary text-primary-foreground font-medium' : 'text-muted-foreground hover:text-foreground hover:bg-muted'}`}
                   >
                     {cat.name}
@@ -61,10 +75,14 @@ export default async function ProductosPage({
 
         {/* Products grid */}
         <div className="flex-1">
+          <h1 className="text-2xl font-bold mb-4">
+            {search ? `Resultados para "${search}"` : 'Catálogo de herramientas y ferretería'}
+          </h1>
           <div className="flex items-center justify-between mb-4 gap-3">
-            <form className="flex-1 max-w-sm">
+            <form className="flex-1 max-w-sm" role="search">
               <input
                 name="search"
+                aria-label="Buscar producto"
                 defaultValue={search}
                 placeholder="Buscar producto..."
                 className="w-full h-9 px-3 rounded-lg border text-sm focus:outline-none focus:ring-2 focus:ring-primary"
@@ -89,8 +107,8 @@ export default async function ProductosPage({
                   <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
                     {p.image ? (
                       <Image
-                        src={p.image.startsWith('/') ? `${API_URL}${p.image}` : p.image}
-                        alt={p.name}
+                        src={imageUrl(p.image)}
+                        alt={p.name.trim()}
                         width={300}
                         height={300}
                         className="w-full h-full object-contain"
@@ -101,7 +119,7 @@ export default async function ProductosPage({
                   </div>
                   <div className="p-3">
                     <p className="text-xs text-muted-foreground mb-1">{p.categoryName ?? ''}</p>
-                    <p className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">{p.name}</p>
+                    <h2 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">{p.name.trim()}</h2>
                     <div className="mt-1.5 flex items-center gap-2">
                       <span className="text-primary font-bold text-sm">{formatCOP(p.price)}</span>
                       {p.comparePrice && (
@@ -118,14 +136,14 @@ export default async function ProductosPage({
           {result && result.totalPages > 1 && (
             <div className="flex justify-center gap-2 mt-8">
               {result.page > 1 && (
-                <Link href={`?page=${result.page - 1}${search ? `&search=${search}` : ''}${categoryId ? `&categoryId=${categoryId}` : ''}`}
+                <Link rel="prev" href={`/productos?page=${result.page - 1}${search ? `&search=${encodeURIComponent(search)}` : ''}${categoryId ? `&categoryId=${categoryId}` : ''}`}
                   className="px-4 py-2 rounded-lg border text-sm hover:bg-muted transition-colors">Anterior</Link>
               )}
               <span className="px-4 py-2 text-sm text-muted-foreground">
                 {result.page} / {result.totalPages}
               </span>
               {result.page < result.totalPages && (
-                <Link href={`?page=${result.page + 1}${search ? `&search=${search}` : ''}${categoryId ? `&categoryId=${categoryId}` : ''}`}
+                <Link rel="next" href={`/productos?page=${result.page + 1}${search ? `&search=${encodeURIComponent(search)}` : ''}${categoryId ? `&categoryId=${categoryId}` : ''}`}
                   className="px-4 py-2 rounded-lg border text-sm hover:bg-muted transition-colors">Siguiente</Link>
               )}
             </div>

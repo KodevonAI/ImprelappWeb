@@ -44,7 +44,7 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
         >
           WhatsApp
         </a>
-        <Link href="/admin/login" className="flex items-center gap-1 hover:opacity-80">
+        <Link href="/admin/login" rel="nofollow" className="flex items-center gap-1 hover:opacity-80">
           <UserCog className="size-3" /> Admin
         </Link>
       </div>

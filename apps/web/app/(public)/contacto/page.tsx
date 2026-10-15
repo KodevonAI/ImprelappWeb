@@ -1,16 +1,25 @@
 import { ContactForm } from '@/components/public/contact-form'
 import { Mail, MapPin, MessageCircle } from 'lucide-react'
+import { CONTACT_EMAIL, JsonLd, SITE_URL, WHATSAPP_NUMBER as WHATSAPP, pageMetadata } from '@/lib/seo'
 
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
+export const metadata = pageMetadata({
+  title: 'Contacto: cotizaciones y asesoría técnica',
+  description: 'Cotiza herramientas, rodamientos, cadenas, reductores y repuestos con Imprelapp. Escríbenos por WhatsApp, correo o formulario. Envíos a toda Colombia.',
+  path: '/contacto',
+})
 
-export const metadata = {
-  title: 'Contáctanos | Imprelapp',
-  description: 'Ponte en contacto con nosotros por WhatsApp, correo electrónico o mediante el formulario.',
+const contactJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ContactPage',
+  url: `${SITE_URL}/contacto`,
+  name: 'Contacto Imprelapp',
+  about: { '@id': `${SITE_URL}/#organization` },
 }
 
 export default function ContactoPage() {
   return (
       <section className="container mx-auto max-w-5xl px-4 py-12 md:py-16">
+        <JsonLd data={contactJsonLd} />
         <h1 className="text-3xl font-bold tracking-tight mb-2">Contáctanos</h1>
         <p className="text-muted-foreground mb-10">
           Estamos aquí para ayudarte. Escríbenos y te responderemos a la brevedad.
@@ -41,10 +50,10 @@ export default function ContactoPage() {
               <div>
                 <p className="font-medium">Correo electrónico</p>
                 <a
-                  href="mailto:contacto@imprelapp.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
-                  contacto@imprelapp.com
+                  {CONTACT_EMAIL}
                 </a>
               </div>
             </div>
@@ -53,7 +62,7 @@ export default function ContactoPage() {
               <MapPin className="size-5 mt-0.5 text-primary shrink-0" />
               <div>
                 <p className="font-medium">Ubicación</p>
-                <p className="text-sm text-muted-foreground">Colombia</p>
+                <p className="text-sm text-muted-foreground">Colombia · Envíos a todo el país</p>
               </div>
             </div>
           </div>
