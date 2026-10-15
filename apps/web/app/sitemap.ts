@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { SITE_URL } from '@/lib/seo'
+import { BRANDS } from '@/lib/brands'
 
 // Server-side fetch: prefer the internal API URL (same as lib/public-api.ts).
 const API_URL = process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001'
@@ -18,7 +19,7 @@ async function fetchJson<T>(path: string): Promise<T | null> {
   }
 }
 
-type ProductPage = { data: Array<{ slug: string; updatedAt?: string }>; totalPages: number }
+type ProductPage = { data: Array<{ slug: string; name?: string; updatedAt?: string }>; totalPages: number }
 
 async function fetchAllProducts() {
   const first = await fetchJson<ProductPage>(`/api/products?pageSize=${PAGE_SIZE}&page=1`)
@@ -41,7 +42,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: SITE_URL, changeFrequency: 'daily', priority: 1 },
     { url: `${SITE_URL}/productos`, changeFrequency: 'daily', priority: 0.9 },
     { url: `${SITE_URL}/contacto`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/marcas`, changeFrequency: 'weekly', priority: 0.6 },
   ]
+
+  // Only brands with published products; empty brand pages are noindex.
+  const brandRoutes: MetadataRoute.Sitemap = BRANDS.filter((b) => products.some((p) => b.pattern.test(p.name ?? ''))).map(
+    (b) => ({ url: `${SITE_URL}/marcas/${b.slug}`, changeFrequency: 'weekly', priority: 0.7 })
+  )
 
   const categoryRoutes: MetadataRoute.Sitemap = (categories ?? []).map((c) => ({
     url: `${SITE_URL}/categorias/${c.slug}`,
@@ -60,5 +67,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
 
-  return [...staticRoutes, ...categoryRoutes, ...productRoutes]
+  return [...staticRoutes, ...categoryRoutes, ...brandRoutes, ...productRoutes]
 }

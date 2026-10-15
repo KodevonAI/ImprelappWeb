@@ -76,3 +76,16 @@ export async function getProductBySlug(slug: string): Promise<ProductPublic | nu
     return null
   }
 }
+
+const ALL_PAGE_SIZE = 50 // API maximum
+
+/** Whole public catalog (paginated under the hood). Used by brand pages. */
+export async function getAllProducts(): Promise<ProductListItemPublic[]> {
+  const first = await getProducts({ pageSize: ALL_PAGE_SIZE, page: 1 })
+  const rest = await Promise.all(
+    Array.from({ length: Math.max(0, first.totalPages - 1) }, (_, i) =>
+      getProducts({ pageSize: ALL_PAGE_SIZE, page: i + 2 })
+    )
+  )
+  return [first, ...rest].flatMap((r) => r.data)
+}

@@ -205,6 +205,11 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
             </li>
           ))}
           <li className="ml-auto">
+            <Link href="/marcas" className="block whitespace-nowrap px-3 py-2 text-[13px] text-slate-600 hover:text-primary">
+              Marcas
+            </Link>
+          </li>
+          <li>
             <Link href="/productos" className="block whitespace-nowrap px-3 py-2 text-[13px] font-semibold text-primary">
               Todo el catálogo
             </Link>

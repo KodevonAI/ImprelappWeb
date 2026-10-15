@@ -8,7 +8,7 @@ export function BrandGrid() {
       {BRANDS.map((b) => (
         <li key={b.name}>
           <Link
-            href={`/productos?search=${encodeURIComponent(b.search)}`}
+            href={`/marcas/${b.slug}`}
             className="group flex h-28 flex-col items-center justify-center gap-1.5 rounded-xl border bg-white px-4 text-center transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
             title={`Productos ${b.name}`}
           >

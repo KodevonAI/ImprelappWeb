@@ -213,7 +213,7 @@ export default async function HomePage() {
         ))}
 
         <section aria-labelledby="marcas">
-          <SectionHeader id="marcas" title="Marcas que manejamos" subtitle="Encuentra productos por marca" />
+          <SectionHeader id="marcas" title="Marcas que manejamos" subtitle="Encuentra productos por marca" href="/marcas" />
           <BrandGrid />
         </section>
 

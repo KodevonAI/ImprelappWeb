@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getCategoriesFlat, getCategoryBySlug, getProducts } from '@/lib/data/public'
 import { Package } from 'lucide-react'
 import { ProductCard } from '@/components/public/product-card'
+import { CATEGORY_GUIDES } from '@/lib/category-guides'
 import { JsonLd, SITE_URL, breadcrumbJsonLd, imageUrl, pageMetadata, truncate } from '@/lib/seo'
 
 type Props = {
@@ -78,9 +79,17 @@ export default async function CategoriaPage({ params, searchParams }: Props) {
     },
   }
 
+  // The guide only renders on page 1 so paginated URLs don't duplicate it.
+  const guide = page === 1 ? CATEGORY_GUIDES[category.slug] : undefined
+  const faqJsonLd = guide && {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: guide.faqs.map(({ q, a }) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <JsonLd data={[collectionJsonLd, breadcrumbJsonLd(crumbs)]} />
+      <JsonLd data={[collectionJsonLd, breadcrumbJsonLd(crumbs), ...(faqJsonLd ? [faqJsonLd] : [])]} />
       <div className="mb-6">
         <nav aria-label="Migas de pan" className="text-sm text-muted-foreground mb-2">
           <Link href="/" className="hover:text-foreground">Inicio</Link>
@@ -140,6 +149,36 @@ export default async function CategoriaPage({ params, searchParams }: Props) {
             <Link href={categoryPath(category.slug, result.page + 1)} rel="next" className="px-4 py-2 rounded-lg border text-sm hover:bg-muted">Siguiente</Link>
           )}
         </nav>
+      )}
+      {guide && (
+        <section id="guia-seccion" aria-labelledby="guia" className="mt-14 scroll-mt-40 grid gap-10 border-t pt-10 lg:grid-cols-[1.4fr_1fr]">
+          <div>
+            <h2 id="guia" className="scroll-mt-40 text-xl font-bold sm:text-2xl">{guide.title}</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{guide.intro}</p>
+            {guide.sections.map((sec) => (
+              <div key={sec.heading} className="mt-6">
+                <h3 className="font-semibold">{sec.heading}</h3>
+                {sec.body.map((para) => (
+                  <p key={para} className="mt-2 text-sm leading-relaxed text-slate-700">{para}</p>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div>
+            <h2 className="text-lg font-bold">Preguntas frecuentes</h2>
+            <div className="mt-3 divide-y rounded-xl border bg-white">
+              {guide.faqs.map(({ q, a }) => (
+                <details key={q} className="group p-4">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium">
+                    {q}
+                    <span className="text-muted-foreground transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                  </summary>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
       )}
     </div>
   )

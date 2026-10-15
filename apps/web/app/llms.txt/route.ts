@@ -1,5 +1,7 @@
 import { getCategoriesFlat } from '@/lib/data/public'
 import { CONTACT_EMAIL, SITE_URL, WHATSAPP_NUMBER } from '@/lib/seo'
+import { BRANDS } from '@/lib/brands'
+import { CATEGORY_GUIDES } from '@/lib/category-guides'
 
 export const revalidate = 3600
 
@@ -25,11 +27,24 @@ export async function GET() {
 - [Inicio](${SITE_URL}/)
 - [Catálogo completo](${SITE_URL}/productos)
 - [Contacto](${SITE_URL}/contacto)
+- [Marcas](${SITE_URL}/marcas)
 - [Mapa del sitio (todas las fichas de producto)](${SITE_URL}/sitemap.xml)
 
 ## Categorías
 
 ${roots.map((root) => [line(root), ...categories.filter((c) => c.parentId === root.id).map((c) => `  ${line(c)}`)].join('\n')).join('\n')}
+
+## Marcas
+
+${BRANDS.map((b) => `- [${b.name}](${SITE_URL}/marcas/${b.slug}): ${b.tagline}`).join('\n')}
+
+## Guías técnicas
+
+${Object.entries(CATEGORY_GUIDES)
+  .map(([slug, g]) => `- [${g.title}](${SITE_URL}/categorias/${slug}#guia): ${g.intro}`)
+  .join('\n')}
+
+Las fichas de rodamientos, chumaceras, correas y poleas incluyen especificaciones (medidas, sellos, holgura, sección) derivadas de la designación estándar de cada referencia.
 `
 
   return new Response(body, {

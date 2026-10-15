@@ -61,6 +61,7 @@ export function Footer({ categoryLinks = [] }: FooterProps) {
             <p className="mb-3 text-sm font-semibold text-white">Compra</p>
             <ul className="space-y-1.5 text-sm">
               <li><Link href="/productos" className="hover:text-white">Catálogo completo</Link></li>
+              <li><Link href="/marcas" className="hover:text-white">Marcas</Link></li>
               <li><Link href="/carrito" className="hover:text-white">Mi carrito</Link></li>
               <li><Link href="/#preguntas-frecuentes" className="hover:text-white">Preguntas frecuentes</Link></li>
               <li><Link href="/contacto" className="hover:text-white">Cotizaciones</Link></li>
