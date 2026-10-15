@@ -57,7 +57,9 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
     name,
     url: productUrl,
     description: productDescription(product, name),
-    ...(product.sku ? { sku: product.sku, mpn: product.sku } : {}),
+    // Google rejects SKUs with quotes or whitespace (e.g. `BV/S/100 4"`); mpn keeps the raw reference.
+    ...(product.sku ? { mpn: product.sku } : {}),
+    ...(product.sku && /^[\w./-]+$/.test(product.sku) ? { sku: product.sku } : {}),
     ...(product.images?.length ? { image: product.images.map((img) => imageUrl(img.url)) } : {}),
     ...(product.category ? { category: product.category.name } : {}),
     offers: {
