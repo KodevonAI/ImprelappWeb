@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { getProductBySlug } from '@/lib/data/public'
 import { formatCOP } from '@/lib/format'
+import { discountPercent } from '@/lib/category-ui'
 import { ContactForm } from '@/components/public/contact-form'
 import { AddToCartButton } from '@/components/public/add-to-cart-button'
 import { Package, MessageCircle, ChevronRight } from 'lucide-react'
@@ -157,8 +158,13 @@ export default async function ProductoPage({ params }: { params: Promise<{ slug:
 
           <div className="flex items-baseline gap-3">
             <span className="text-3xl font-bold text-primary">{formatCOP(product.price)}</span>
-            {product.comparePrice && (
-              <span className="text-lg text-muted-foreground line-through">{formatCOP(product.comparePrice)}</span>
+            {discountPercent(product.price, product.comparePrice) && (
+              <>
+                <span className="text-lg text-muted-foreground line-through">{formatCOP(product.comparePrice!)}</span>
+                <span className="rounded-md bg-red-600 px-2 py-0.5 text-sm font-bold text-white">
+                  -{discountPercent(product.price, product.comparePrice)}%
+                </span>
+              </>
             )}
           </div>
 

@@ -50,8 +50,11 @@ function subscribe(callback: () => void) {
   return () => listeners.delete(callback)
 }
 
+// Must return the same reference every call, or useSyncExternalStore loops.
+const EMPTY_CART: CartItem[] = []
+
 function getServerSnapshot(): CartItem[] {
-  return []
+  return EMPTY_CART
 }
 
 const CartContext = createContext<CartContextValue | null>(null)

@@ -8,7 +8,7 @@ export async function PublicLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar categoryLinks={roots.slice(0, 6)} />
+      <Navbar categoryLinks={roots} />
       <main className="flex-1">{children}</main>
       <Footer categoryLinks={roots} />
     </div>

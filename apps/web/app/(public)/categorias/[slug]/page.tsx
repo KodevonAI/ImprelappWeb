@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { getCategoriesFlat, getCategoryBySlug, getProducts } from '@/lib/data/public'
-import { formatCOP } from '@/lib/format'
 import { Package } from 'lucide-react'
+import { ProductCard } from '@/components/public/product-card'
 import { JsonLd, SITE_URL, breadcrumbJsonLd, imageUrl, pageMetadata, truncate } from '@/lib/seo'
 
 type Props = {
@@ -124,38 +123,10 @@ export default async function CategoriaPage({ params, searchParams }: Props) {
           <p>Sin productos en esta categoría aún</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {result.data.map((p) => (
-            <Link
-              key={p.id}
-              href={`/productos/${p.slug}`}
-              className="rounded-xl border bg-card hover:shadow-md transition-shadow overflow-hidden group"
-            >
-              <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
-                {p.image ? (
-                  <Image
-                    src={imageUrl(p.image)}
-                    alt={p.name.trim()}
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <Package className="size-10 text-muted-foreground/20" />
-                )}
-              </div>
-              <div className="p-3">
-                <h2 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">{p.name.trim()}</h2>
-                <div className="mt-1.5 flex items-center gap-2">
-                  <span className="text-primary font-bold text-sm">{formatCOP(p.price)}</span>
-                  {p.comparePrice && (
-                    <span className="text-xs text-muted-foreground line-through">{formatCOP(p.comparePrice)}</span>
-                  )}
-                </div>
-                {!p.inStock && <p className="text-xs text-destructive mt-1">Sin stock</p>}
-              </div>
-            </Link>
-          ))}
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {result.data.map((p, i) => (
+                <ProductCard key={p.id} product={p} as="h2" priority={i < 4} />
+              ))}
         </div>
       )}
 

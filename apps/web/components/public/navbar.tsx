@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
-import { useState, useRef } from 'react'
-import { Search, Menu, X, Phone, ShoppingCart, UserCog } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
+import { ChevronDown, LayoutGrid, MessageCircle, Search, ShoppingCart, Truck, UserCog, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/lib/cart-context'
+import { CategoryIcon } from '@/lib/category-ui'
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP ?? '573207360233'
 
@@ -16,122 +17,199 @@ interface NavbarProps {
 
 export function Navbar({ categoryLinks = [] }: NavbarProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const { count } = useCart()
-  const [menuOpen, setMenuOpen] = useState(false)
+  // The menu remembers the path it was opened on, so navigating closes it.
+  const [openedAt, setOpenedAt] = useState<string | null>(null)
+  const menuOpen = openedAt === pathname
+  const setMenuOpen = (open: boolean) => setOpenedAt(open ? pathname : null)
   const [search, setSearch] = useState('')
-  const inputRef = useRef<HTMLInputElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  // Close the categories menu on outside click and Escape.
+  useEffect(() => {
+    if (!menuOpen) return
+    function onDown(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setOpenedAt(null)
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpenedAt(null)
+    }
+    document.addEventListener('mousedown', onDown)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDown)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [menuOpen])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
-    if (search.trim()) {
-      router.push(`/productos?search=${encodeURIComponent(search.trim())}`)
+    const q = search.trim()
+    if (q) {
+      router.push(`/productos?search=${encodeURIComponent(q)}`)
       setSearch('')
     }
   }
 
-  return (
-    <header className="sticky top-0 z-40 border-b bg-white shadow-sm">
-      {/* Top bar */}
-      <div className="bg-primary text-primary-foreground text-xs py-1.5 px-4 flex items-center justify-end gap-4">
-        <a href={`tel:+${WHATSAPP_NUMBER}`} className="flex items-center gap-1 hover:opacity-80">
-          <Phone className="size-3" /> Llámanos
-        </a>
-        <a
-          href={`https://wa.me/${WHATSAPP_NUMBER}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:opacity-80"
-        >
-          WhatsApp
-        </a>
-        <Link href="/admin/login" rel="nofollow" className="flex items-center gap-1 hover:opacity-80">
-          <UserCog className="size-3" /> Admin
-        </Link>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0">
-          <Image src="/logo-full.png" alt="Imprelapp" width={535} height={306} className="h-12 w-auto" priority />
-        </Link>
-
-        {/* Search */}
-        <div className="flex-1 flex justify-center">
-          <form onSubmit={handleSearch} className="w-full max-w-xl">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-              <input
-                ref={inputRef}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar taladros, martillos, repuestos..."
-                className="w-full h-10 pl-9 pr-4 rounded-lg border bg-muted/50 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:bg-background"
-              />
-            </div>
-          </form>
-        </div>
-
-        {/* Cart */}
-        <Link
-          href="/carrito"
-          className="relative p-2 rounded-lg hover:bg-muted transition-colors shrink-0"
-          aria-label="Carrito"
-        >
-          <ShoppingCart className="size-5" />
-          {count > 0 && (
-            <span className="absolute -top-1 -right-1 flex items-center justify-center h-4 min-w-4 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold">
-              {count}
-            </span>
-          )}
-        </Link>
-
-        {/* Mobile menu toggle */}
+  const searchForm = (
+    <form onSubmit={handleSearch} role="search" className="w-full">
+      <div className="relative">
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="¿Qué estás buscando? Rodamientos, correas, llaves…"
+          aria-label="Buscar productos"
+          className="h-11 w-full rounded-lg border border-slate-300 bg-white pl-4 pr-12 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        />
         <button
-          className="sm:hidden p-2 rounded-lg hover:bg-muted transition-colors"
-          onClick={() => setMenuOpen(!menuOpen)}
+          type="submit"
+          className="absolute right-1 top-1 flex size-9 items-center justify-center rounded-md bg-primary text-primary-foreground hover:bg-primary/90"
+          aria-label="Buscar"
         >
-          {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          <Search className="size-4" />
         </button>
       </div>
+    </form>
+  )
 
-      {/* Nav links */}
-      <nav className={cn(
-        'border-t bg-white sm:block',
-        menuOpen ? 'block' : 'hidden sm:block'
-      )}>
-        <div className="max-w-7xl mx-auto px-4">
-          <ul className="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-0 sm:overflow-x-auto">
-            <li>
-              <Link
-                href="/productos"
-                className="block px-4 py-2.5 text-sm font-medium text-foreground hover:text-primary hover:bg-muted/50 transition-colors whitespace-nowrap"
-                onClick={() => setMenuOpen(false)}
-              >
-                Todos los productos
-              </Link>
-            </li>
-            {categoryLinks.map((cat) => (
-              <li key={cat.slug}>
-                <Link
-                  href={`/categorias/${cat.slug}`}
-                  className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors whitespace-nowrap"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {cat.name}
-                </Link>
-              </li>
-            ))}
-            <li className="sm:ml-auto">
-              <Link
-                href="/contacto"
-                className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors whitespace-nowrap"
-                onClick={() => setMenuOpen(false)}
-              >
-                Contacto
-              </Link>
-            </li>
-          </ul>
+  return (
+    <header className="sticky top-0 z-40 bg-white shadow-sm">
+      {/* Utility bar */}
+      <div className="bg-slate-900 text-[12px] text-slate-200">
+        <div className="mx-auto flex h-8 max-w-7xl items-center justify-between gap-4 px-4">
+          <p className="flex items-center gap-1.5 truncate">
+            <Truck className="size-3.5 shrink-0" /> Envíos a toda Colombia
+          </p>
+          <nav aria-label="Enlaces de servicio" className="flex items-center divide-x divide-slate-700">
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-3 hover:text-white"
+            >
+              Ventas WhatsApp
+            </a>
+            <Link href="/contacto" className="hidden px-3 hover:text-white sm:inline">
+              Contacto
+            </Link>
+            <Link href="/admin/login" rel="nofollow" className="flex items-center gap-1 pl-3 hover:text-white">
+              <UserCog className="size-3" /> Admin
+            </Link>
+          </nav>
         </div>
+      </div>
+
+      {/* Main header */}
+      <div className="border-b">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 md:gap-5">
+          <Link href="/" className="shrink-0" aria-label="Imprelapp - inicio">
+            <Image src="/logo-full.png" alt="Imprelapp" width={535} height={306} className="h-11 w-auto md:h-12" priority />
+          </Link>
+
+          <div ref={menuRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-expanded={menuOpen}
+              aria-controls="categories-menu"
+              className={cn(
+                'flex h-11 items-center gap-2 rounded-lg border px-3 text-sm font-semibold transition-colors',
+                menuOpen ? 'border-primary bg-primary text-primary-foreground' : 'border-slate-300 hover:border-primary hover:text-primary'
+              )}
+            >
+              {menuOpen ? <X className="size-4" /> : <LayoutGrid className="size-4" />}
+              <span className="hidden sm:inline">Categorías</span>
+              <ChevronDown className={cn('hidden size-4 transition-transform sm:block', menuOpen && 'rotate-180')} />
+            </button>
+
+            {menuOpen && (
+              <div
+                id="categories-menu"
+                className="absolute left-0 top-full z-50 mt-2 w-[min(92vw,640px)] rounded-xl border bg-white p-3 shadow-2xl"
+              >
+                <ul className="grid grid-cols-1 gap-1 sm:grid-cols-2">
+                  {categoryLinks.map((cat) => (
+                      <li key={cat.slug}>
+                        <Link
+                          href={`/categorias/${cat.slug}`}
+                          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-primary/5 hover:text-primary"
+                        >
+                          <span className="flex size-9 items-center justify-center rounded-full bg-primary/10 text-primary">
+                            <CategoryIcon slug={cat.slug} className="size-4.5" />
+                          </span>
+                          {cat.name}
+                        </Link>
+                      </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/productos"
+                  className="mt-2 block rounded-lg bg-muted px-3 py-2.5 text-center text-sm font-semibold text-primary hover:bg-primary/10"
+                >
+                  Ver todo el catálogo →
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <div className="hidden flex-1 md:block">{searchForm}</div>
+
+          <div className="ml-auto flex items-center gap-1 md:ml-0">
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-muted lg:flex"
+            >
+              <MessageCircle className="size-5 text-green-600" />
+              <span className="leading-tight">
+                <span className="block text-[11px] text-muted-foreground">Asesoría</span>
+                <span className="font-semibold">WhatsApp</span>
+              </span>
+            </a>
+            <Link
+              href="/carrito"
+              className="relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-muted"
+              aria-label={`Carrito${count ? `, ${count} productos` : ''}`}
+            >
+              <ShoppingCart className="size-6" />
+              {count > 0 && (
+                <span className="absolute left-7 top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-600 px-1 text-[11px] font-bold text-white">
+                  {count}
+                </span>
+              )}
+              <span className="hidden font-semibold lg:inline">Carrito</span>
+            </Link>
+          </div>
+        </div>
+        <div className="px-4 pb-3 md:hidden">{searchForm}</div>
+      </div>
+
+      {/* Quick category links */}
+      <nav aria-label="Categorías principales" className="hidden border-b bg-white md:block">
+        <ul className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 [scrollbar-width:none]">
+          {categoryLinks.slice(0, 7).map((cat) => (
+            <li key={cat.slug}>
+              <Link
+                href={`/categorias/${cat.slug}`}
+                className={cn(
+                  'block whitespace-nowrap border-b-2 px-3 py-2 text-[13px] transition-colors',
+                  pathname === `/categorias/${cat.slug}`
+                    ? 'border-primary font-semibold text-primary'
+                    : 'border-transparent text-slate-600 hover:text-primary'
+                )}
+              >
+                {cat.name}
+              </Link>
+            </li>
+          ))}
+          <li className="ml-auto">
+            <Link href="/productos" className="block whitespace-nowrap px-3 py-2 text-[13px] font-semibold text-primary">
+              Todo el catálogo
+            </Link>
+          </li>
+        </ul>
       </nav>
     </header>
   )

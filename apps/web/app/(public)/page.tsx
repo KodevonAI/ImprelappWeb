@@ -1,12 +1,16 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
+import type { ProductListItemPublic } from '@imprelapp/types'
 import { getCategories, getProducts } from '@/lib/data/public'
-import { formatCOP } from '@/lib/format'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { ArrowRight, MessageCircle, Wrench, Package, Zap } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
 import { JsonLd, WHATSAPP_NUMBER, imageUrl, pageMetadata } from '@/lib/seo'
+import { detectBrand } from '@/lib/brands'
+import { CategoryIcon, discountPercent } from '@/lib/category-ui'
+import { ProductCard } from '@/components/public/product-card'
+import { Rail, RailItem } from '@/components/public/rail'
+import { HeroCarousel, type HeroSlide } from '@/components/public/hero-carousel'
+import { BrandGrid } from '@/components/public/brand-grid'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Imprelapp | Herramientas, Rodamientos y Ferretería en Colombia',
@@ -48,183 +52,201 @@ const faqJsonLd = {
   })),
 }
 
-const categoryIcons: Record<string, string> = {
-  'herramientas-electricas': '🔌',
-  'herramientas-manuales': '🔧',
-  rodamientos: '🛞',
-  cadenas: '⛓️',
-  reductores: '⚙️',
-  'variadores-de-velocidad': '🎚️',
-  rodillos: '🔘',
-  'repuestos-automotrices': '🚗',
-  'carretillas-y-equipos': '🛠️',
-  'ferreteria-en-general': '🔩',
+// Rails show photographed products first so the home page looks complete
+// even though many catalog items have no image yet.
+function imagesFirst(list: ProductListItemPublic[]) {
+  return [...list].sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)))
 }
 
-const defaultCategories = [
-  { name: 'Herramientas Eléctricas', slug: 'herramientas-electricas' },
-  { name: 'Herramientas Manuales', slug: 'herramientas-manuales' },
-  { name: 'Rodamientos', slug: 'rodamientos' },
-  { name: 'Cadenas', slug: 'cadenas' },
-  { name: 'Reductores', slug: 'reductores' },
-  { name: 'Variadores de Velocidad', slug: 'variadores-de-velocidad' },
-  { name: 'Rodillos', slug: 'rodillos' },
-  { name: 'Repuestos Automotrices', slug: 'repuestos-automotrices' },
-  { name: 'Carretillas y Equipos', slug: 'carretillas-y-equipos' },
-  { name: 'Ferretería en General', slug: 'ferreteria-en-general' },
-]
+function heroImages(list: ProductListItemPublic[]) {
+  return list
+    .filter((p) => p.image)
+    .slice(0, 3)
+    .map((p) => ({ src: imageUrl(p.image!), alt: p.name.trim() }))
+}
+
+function SectionHeader({ title, subtitle, href, id }: { title: string; subtitle?: string; href?: string; id?: string }) {
+  return (
+    <div className="mb-5 flex items-end justify-between gap-4">
+      <div>
+        <h2 id={id} className="text-xl font-bold tracking-tight sm:text-2xl">{title}</h2>
+        {subtitle && <p className="mt-0.5 text-sm text-muted-foreground">{subtitle}</p>}
+      </div>
+      {href && (
+        <Link href={href} className="shrink-0 text-sm font-semibold text-primary hover:underline">
+          Ver todo →
+        </Link>
+      )}
+    </div>
+  )
+}
 
 export default async function HomePage() {
-  const [categories, productList] = await Promise.all([
-    getCategories(),
-    getProducts({ pageSize: 24 }),
+  const categories = (await getCategories()).filter((c) => !c.parentId)
+  const [featured, ...byCategory] = await Promise.all([
+    getProducts({ featured: true, pageSize: 24 }),
+    ...categories.map((c) => getProducts({ categoryId: c.id, pageSize: 24 })),
   ])
-  const products = productList.data
 
-  const topCategories = categories.filter((c) => !c.parentId).slice(0, 10)
+  const sections = categories
+    .map((cat, i) => ({ cat, total: byCategory[i].total, products: imagesFirst(byCategory[i].data) }))
+  const pool = sections.flatMap((s) => s.products)
+  const find = (slug: string) => sections.find((s) => s.cat.slug === slug)?.products ?? []
+
+  // Only a couple of products carry a real markdown, so the deals rail falls back
+  // to featured products until there are enough discounts to fill it.
+  const discounted = pool
+    .filter((p) => p.inStock && discountPercent(p.price, p.comparePrice))
+    .sort((a, b) => discountPercent(b.price, b.comparePrice)! - discountPercent(a.price, a.comparePrice)!)
+  const showDeals = discounted.length >= 5
+  const spotlight = showDeals ? imagesFirst(discounted).slice(0, 15) : imagesFirst(featured.data).slice(0, 15)
+
+  const starflex = pool.filter((p) => detectBrand(p.name)?.name === 'Starflex')
+  const slides: HeroSlide[] = [
+    {
+      eyebrow: 'Importadora · Envíos a toda Colombia',
+      title: 'Herramientas, rodamientos y ferretería para tu negocio',
+      text: 'Más de 500 referencias para talleres, industria y mantenimiento, con asesoría técnica por WhatsApp.',
+      cta: { label: 'Ver catálogo', href: '/productos' },
+      images: heroImages(imagesFirst(featured.data).length ? imagesFirst(featured.data) : pool),
+      tone: 'from-primary via-blue-800 to-slate-900',
+    },
+    {
+      eyebrow: 'Rodamientos · Chumaceras',
+      title: 'Rodamientos ZSG y Koyo',
+      text: 'Rígidos de bolas, sellados 2RS, chumaceras UCP y UCF en medidas métricas y en pulgadas.',
+      cta: { label: 'Ver rodamientos', href: '/categorias/rodamientos' },
+      images: heroImages(find('rodamientos')),
+      tone: 'from-slate-900 via-slate-800 to-primary',
+    },
+    {
+      eyebrow: 'Herramienta manual',
+      title: 'Llaves, copas y juegos de herramientas',
+      text: 'Llaves mixtas, copas de cuadrante, alicates y más para el trabajo diario del taller.',
+      cta: { label: 'Ver herramientas', href: '/categorias/herramientas-manuales' },
+      images: heroImages(find('herramientas-manuales')),
+      tone: 'from-blue-900 via-primary to-sky-700',
+    },
+    ...(starflex.length
+      ? [
+          {
+            eyebrow: 'Transmisión de potencia',
+            title: 'Correas industriales Starflex',
+            text: 'Correas en V para maquinaria industrial y agrícola. Consulta tu referencia.',
+            cta: { label: 'Ver correas', href: '/productos?search=Starflex' },
+            images: heroImages(starflex),
+            tone: 'from-slate-900 via-blue-950 to-blue-800',
+          },
+        ]
+      : []),
+  ]
+
+  const rails = ['rodamientos', 'herramientas-manuales', 'ferreteria-en-general', 'herramientas-electricas']
+    .map((slug) => sections.find((s) => s.cat.slug === slug))
+    .filter((s): s is NonNullable<typeof s> => Boolean(s && s.products.length))
 
   return (
-    <>
+    <div className="bg-slate-50">
       <JsonLd data={faqJsonLd} />
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-primary to-blue-900 text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl sm:text-5xl font-bold leading-tight mb-4">
-            Herramientas y Ferretería<br />
-            <span className="text-blue-200">para tu negocio</span>
-          </h1>
-          <p className="text-blue-100 text-lg mb-8">
-            Herramientas eléctricas y manuales, rodamientos, cadenas, reductores, variadores de velocidad,
-            rodillos, repuestos automotrices, carretillas y ferretería en general. Entregamos en toda Colombia.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="#categorias" className={cn(buttonVariants({ size: 'lg' }), 'bg-white text-primary hover:bg-blue-50 font-semibold')}>
-              Ver catálogo completo <ArrowRight className="size-4 ml-1" />
-            </Link>
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola, me interesa conocer sus productos`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(buttonVariants({ size: 'lg', variant: 'outline' }), 'bg-transparent border-white text-white hover:bg-white/10 dark:bg-transparent')}
-            >
-              <MessageCircle className="size-4 mr-1.5" /> WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
 
-      {/* Features strip */}
-      <section className="border-b bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[
-            { icon: Package, label: 'Amplio catálogo', desc: 'Miles de referencias' },
-            { icon: Zap, label: 'Despacho rápido', desc: 'Entrega a todo el país' },
-            { icon: Wrench, label: 'Asesoría técnica', desc: 'Te ayudamos a elegir' },
-          ].map(({ icon: Icon, label, desc }) => (
-            <div key={label} className="flex items-center gap-3 p-4 rounded-xl bg-card border">
-              <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                <Icon className="size-5 text-primary" />
-              </div>
-              <div>
-                <p className="font-medium text-sm">{label}</p>
-                <p className="text-xs text-muted-foreground">{desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section id="categorias" className="max-w-7xl mx-auto px-4 py-12 scroll-mt-4">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold">Categorías</h2>
-          <Link href="/productos" className="text-sm text-primary hover:underline">Ver todo →</Link>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {(topCategories.length ? topCategories : defaultCategories).map((cat, i) => (
-            <Link
-              key={cat.slug || i}
-              href={cat.slug ? `/categorias/${cat.slug}` : '/productos'}
-              className="flex flex-col items-center gap-2 p-4 rounded-xl border bg-card hover:border-primary hover:shadow-sm transition-all text-center"
-            >
-              <span className="text-3xl" aria-hidden="true">{categoryIcons[cat.slug] ?? '📦'}</span>
-              <span className="text-sm font-medium">{cat.name}</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Product listing */}
-      {products.length > 0 && (
-        <section className="bg-muted/30 py-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold">Nuestros productos</h2>
-              <Link href="/productos" className="text-sm text-primary hover:underline">Ver catálogo completo →</Link>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {products.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/productos/${p.slug}`}
-                  className="rounded-xl border bg-card hover:shadow-md transition-shadow overflow-hidden group"
-                >
-                  <div className="aspect-square bg-muted flex items-center justify-center overflow-hidden">
-                    {p.image ? (
-                      <Image
-                        src={imageUrl(p.image)}
-                        alt={p.name}
-                        width={300}
-                        height={300}
-                        className="w-full h-full object-contain"
-                      />
+      {/* Category shortcuts */}
+      <nav aria-label="Comprar por categoría" className="border-b bg-white">
+        <ul className="mx-auto flex max-w-7xl gap-4 overflow-x-auto px-4 py-5 [scrollbar-width:none] lg:justify-between">
+          {sections.map(({ cat, products, total }) => {
+            const img = products.find((p) => p.image)?.image
+            return (
+              <li key={cat.slug} className="shrink-0">
+                <Link href={`/categorias/${cat.slug}`} className="group flex w-20 flex-col items-center gap-2 text-center sm:w-24">
+                  <span className="relative flex size-18 items-center justify-center overflow-hidden rounded-full border-2 border-slate-200 bg-white transition group-hover:border-primary sm:size-20">
+                    {img ? (
+                      <Image src={imageUrl(img)} alt="" fill sizes="80px" className="object-contain p-2.5" />
                     ) : (
-                      <Package className="size-12 text-muted-foreground/30" />
+                      <CategoryIcon slug={cat.slug} className="size-8 text-primary" strokeWidth={1.5} />
                     )}
-                  </div>
-                  <div className="p-3">
-                    <p className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">{p.name}</p>
-                    <p className="text-primary font-bold text-sm mt-1">{formatCOP(p.price)}</p>
-                    {!p.inStock && (
-                      <p className="text-xs text-destructive mt-0.5">Sin stock</p>
-                    )}
-                  </div>
+                  </span>
+                  <span className="text-xs font-medium leading-tight text-slate-700 group-hover:text-primary">{cat.name}</span>
+                  {total > 0 && <span className="sr-only">{total} productos</span>}
                 </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
+
+      <div className="mx-auto max-w-7xl space-y-12 px-4 py-6 sm:py-8">
+        <HeroCarousel slides={slides} />
+
+        {spotlight.length > 0 && (
+          <section aria-labelledby="destacados">
+            <SectionHeader
+              id="destacados"
+              title={showDeals ? '¡Aprovecha y ahorra!' : 'Productos destacados'}
+              subtitle={showDeals ? 'Productos con precio rebajado' : 'Selección de nuestro catálogo'}
+              href="/productos"
+            />
+            <Rail label={showDeals ? 'Ofertas' : 'Destacados'}>
+              {spotlight.map((p, i) => (
+                <RailItem key={p.id}>
+                  <ProductCard product={p} className="h-full" priority={i < 2} />
+                </RailItem>
               ))}
-            </div>
+            </Rail>
+          </section>
+        )}
+
+        {rails.map(({ cat, products, total }) => (
+          <section key={cat.slug} aria-labelledby={`rail-${cat.slug}`}>
+            <SectionHeader
+              id={`rail-${cat.slug}`}
+              title={cat.name}
+              subtitle={`${total} referencias disponibles`}
+              href={`/categorias/${cat.slug}`}
+            />
+            <Rail label={cat.name}>
+              {products.slice(0, 15).map((p) => (
+                <RailItem key={p.id}>
+                  <ProductCard product={p} className="h-full" />
+                </RailItem>
+              ))}
+            </Rail>
+          </section>
+        ))}
+
+        <section aria-labelledby="marcas">
+          <SectionHeader id="marcas" title="Marcas que manejamos" subtitle="Encuentra productos por marca" />
+          <BrandGrid />
+        </section>
+
+        <section className="overflow-hidden rounded-2xl bg-primary px-6 py-10 text-center text-white sm:px-12">
+          <h2 className="text-2xl font-bold">¿No encuentras lo que buscas?</h2>
+          <p className="mx-auto mt-2 max-w-xl text-blue-100">
+            Envíanos la referencia o una foto del repuesto por WhatsApp y te ayudamos a conseguirlo.
+          </p>
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hola, necesito ayuda para encontrar un producto')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex h-11 items-center gap-2 rounded-lg bg-green-500 px-6 text-sm font-semibold text-white transition hover:bg-green-400"
+          >
+            <MessageCircle className="size-5" /> Chatear por WhatsApp
+          </a>
+        </section>
+
+        <section aria-labelledby="preguntas-frecuentes" className="mx-auto max-w-3xl scroll-mt-40">
+          <h2 id="preguntas-frecuentes" className="mb-5 text-center text-xl font-bold sm:text-2xl">Preguntas frecuentes</h2>
+          <div className="divide-y rounded-xl border bg-white">
+            {faqs.map(({ q, a }) => (
+              <details key={q} className="group p-4">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium">
+                  {q}
+                  <span className="text-muted-foreground transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+                </summary>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a}</p>
+              </details>
+            ))}
           </div>
         </section>
-      )}
-
-      {/* FAQ */}
-      <section className="max-w-3xl mx-auto px-4 py-12">
-        <h2 className="text-xl font-bold mb-6">Preguntas frecuentes</h2>
-        <div className="divide-y rounded-xl border bg-card">
-          {faqs.map(({ q, a }) => (
-            <details key={q} className="group p-4">
-              <summary className="cursor-pointer list-none font-medium text-sm flex items-center justify-between gap-3">
-                {q}
-                <span className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
-              </summary>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-
-      {/* WhatsApp CTA */}
-      <section className="bg-primary text-white py-14 px-4 text-center">
-        <h2 className="text-2xl font-bold mb-2">¿No encuentras lo que buscas?</h2>
-        <p className="text-blue-100 mb-6">Contáctanos por WhatsApp y te ayudamos a conseguirlo.</p>
-        <a
-          href={`https://wa.me/${WHATSAPP_NUMBER}?text=Hola, necesito ayuda para encontrar un producto`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ size: 'lg' }), 'bg-green-500 hover:bg-green-400 text-white font-semibold')}
-        >
-          <MessageCircle className="size-5 mr-2" /> Chatear por WhatsApp
-        </a>
-      </section>
-    </>
+      </div>
+    </div>
   )
 }
