@@ -7,7 +7,7 @@ export async function PublicLayout({ children }: { children: React.ReactNode }) 
   const roots = all.filter((c) => !c.parentId).map((c) => ({ name: c.name, slug: c.slug }))
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col overflow-x-clip">
       <Navbar categoryLinks={roots} />
       <main className="flex-1">{children}</main>
       <Footer categoryLinks={roots} />

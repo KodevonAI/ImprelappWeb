@@ -49,7 +49,7 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
             aria-hidden={i !== index}
             inert={i !== index}
             className={cn(
-              'col-start-1 row-start-1 grid min-h-[300px] items-center gap-6 bg-gradient-to-br px-6 py-8 text-white transition-opacity duration-700 sm:min-h-[340px] sm:px-12 md:grid-cols-[1.1fr_1fr]',
+              'col-start-1 row-start-1 grid min-h-[300px] items-center gap-6 bg-gradient-to-br px-6 pt-8 pb-14 text-white transition-opacity duration-700 sm:min-h-[340px] sm:px-12 sm:pb-12 md:grid-cols-[1.1fr_1fr]',
               s.tone,
               i === index ? 'opacity-100' : 'pointer-events-none opacity-0'
             )}

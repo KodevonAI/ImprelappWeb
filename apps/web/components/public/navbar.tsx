@@ -81,19 +81,19 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
           <p className="flex items-center gap-1.5 truncate">
             <Truck className="size-3.5 shrink-0" /> Envíos a toda Colombia
           </p>
-          <nav aria-label="Enlaces de servicio" className="flex items-center divide-x divide-slate-700">
+          <nav aria-label="Enlaces de servicio" className="flex shrink-0 items-center divide-x divide-slate-700">
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 hover:text-white"
+              className="whitespace-nowrap px-3 hover:text-white"
             >
-              Ventas WhatsApp
+              <span className="hidden min-[400px]:inline">Ventas </span>WhatsApp
             </a>
             <Link href="/contacto" className="hidden px-3 hover:text-white sm:inline">
               Contacto
             </Link>
-            <Link href="/admin/login" rel="nofollow" className="flex items-center gap-1 pl-3 hover:text-white">
+            <Link href="/admin/login" rel="nofollow" className="flex items-center gap-1 whitespace-nowrap pl-3 hover:text-white">
               <UserCog className="size-3" /> Admin
             </Link>
           </nav>
@@ -188,7 +188,7 @@ export function Navbar({ categoryLinks = [] }: NavbarProps) {
 
       {/* Quick category links */}
       <nav aria-label="Categorías principales" className="hidden border-b bg-white md:block">
-        <ul className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 [scrollbar-width:none]">
+        <ul className="relative mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 [scrollbar-width:none]">
           {categoryLinks.slice(0, 7).map((cat) => (
             <li key={cat.slug}>
               <Link

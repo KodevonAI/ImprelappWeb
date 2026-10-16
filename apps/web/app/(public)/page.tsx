@@ -151,7 +151,7 @@ export default async function HomePage() {
 
       {/* Category shortcuts */}
       <nav aria-label="Comprar por categoría" className="border-b bg-white">
-        <ul className="mx-auto flex max-w-7xl gap-4 overflow-x-auto px-4 py-5 [scrollbar-width:none] lg:justify-between">
+        <ul className="relative mx-auto flex max-w-7xl gap-4 overflow-x-auto px-4 py-5 [scrollbar-width:none] lg:justify-between">
           {sections.map(({ cat, products, total }) => {
             const img = products.find((p) => p.image)?.image
             return (
